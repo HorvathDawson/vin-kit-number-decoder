@@ -41,11 +41,13 @@ router.post('/insert/submit', async function(req, res, next) {
 });
 
 router.post('/update/submit', async function(req, res, next) {
+/*
   var updateData = {
     year: req.body.year,
     make: req.body.make,
     harnessType: req.body.harnessType
-  }
+  } */
+  
   const [mainDb, specialDb] = await openDataBases();
   await mainDb.run( UPDATE_DATA, updateData.year, updateData.make, updateData.harnessType, );
   res.redirect('/crud');

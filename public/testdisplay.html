@@ -11,7 +11,7 @@
   <div class="head">
     <ul>
       <li ng-repeat="titles in header" class="list">
-        <label class="table_head">{{titles}}</label>
+        <label class="table_head" ng-bind="titles"></label>
       </li>
     </ul>
   </div>
@@ -20,7 +20,7 @@
       <li ng-repeat="rowData in data">
         <ul ng-class-odd="'odd'" ng-class-even="'even'">
           <li ng-repeat="(key, value) in rowData" class="list">
-            <label class="table">{{value}}</label>
+            <label class="table" ng-bind="value"></label>
           </li>
         </ul>
       </li>
