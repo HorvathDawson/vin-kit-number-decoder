@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>VIN Decoder</title>
+  <h1>VIN Decoder</h1>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js'></script>
+  <script src='node_modules\xlsx\dist\xlsx.full.min.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src='./angular/angular-file-model.js'></script>
+  <script src='./angular/importFile.controller.js'></script>
+  <script src='./angular/importedVinNumbers.service.js'></script>
+</head>
+
+<body ng-app='myApp'>
+<div  ng-controller='importController as import'>
+  <div>
+    <form method='post'>
+      <input type='file' file-model='import.inputFile'>
+      <button type='sumbit' ng-click='import.importSpreadSheet()'>Submit</button>
+      <button type='reset' value='reset'>Clear</button>
+    </form>
+  </div>
+  <div>
+    <br>
+    <br>
+    <button type='button' ng-click='import.vinDecoder(import.joinedVinNumbers)'>Test</button>
+  </div>
+</div>
+<div>
+  <form action="crudVinComparisonDB.html" method="post">
+    <br>
+    <button type="submit">Vin - Connector Data Base</button>
+  </form>
+</div>
+</body>
+
+</html>

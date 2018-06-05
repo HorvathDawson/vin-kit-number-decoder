@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" ng-app="myApp">
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js'></script>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body ng-controller="mainController">
+  <div class="head">
+    <ul>
+      <li ng-repeat="titles in header" class="list">
+        <label class="table_head">{{titles}}</label>
+      </li>
+    </ul>
+  </div>
+  <div class="data">
+    <ul>
+      <li ng-repeat="rowData in data">
+        <ul ng-class-odd="'odd'" ng-class-even="'even'">
+          <li ng-repeat="(key, value) in rowData" class="list">
+            <label class="table">{{value}}</label>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+</body>
+<script type="text/javascript">
+  angular.module("myApp", [])
+    .controller("mainController", function($scope, $http) {
+      $scope.data;
+      $scope.header = ['year', 'make', 'harness type']
+      $scope.receiveData = function() {
+        $http({
+          method: 'GET',
+          url: 'http://localhost:8000/getAllData'
+        }).then(function successCallback(response) {
+          $scope.data = response.data;
+          console.log(response);
+        }, function errorCallback(response) {
+          console.log(response);
+        });
+      };
+      $scope.receiveData();
+    });
+</script>
+<style>
+  .head {
+    background: gainsboro;
+  }
+
+  body {
+    background: ghostwhite;
+    border-style: solid;
+    border-width:1px;
+  }
+
+  .even {
+    background: gainsboro;
+  }
+
+  .odd {
+    background: ghostwhite;
+  }
+
+  .list {
+    display: inline-block;
+    width: 25%;
+    text-align: justify;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .table {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+  }
+  .table_head {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+  }
+</style>
+</html>
