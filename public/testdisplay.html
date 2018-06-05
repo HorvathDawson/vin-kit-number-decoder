@@ -2,37 +2,87 @@
 <html lang="en" dir="ltr" ng-app="myApp">
 <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js'></script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" media="screen" />
+
 <head>
   <meta charset="utf-8">
   <title></title>
 </head>
 
 <body ng-controller="mainController">
-  <div class="head">
-    <ul>
-      <li ng-repeat="titles in header" class="list">
-        <label class="table_head" ng-bind="titles"></label>
-      </li>
-    </ul>
-  </div>
-  <div class="data">
-    <ul>
-      <li ng-repeat="rowData in data">
-        <ul ng-class-odd="'odd'" ng-class-even="'even'">
-          <li ng-repeat="(key, value) in rowData" class="list">
-            <label class="table" ng-bind="value"></label>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+  <form action="/insert/submit" method="post">
+
+    <input type="number" name="year">
+    <label>year</label>
+    <br>
+
+    <input type="text" name="make">
+    <label>make</label>
+    <br>
+
+    <input type="number" name="harnessType">
+    <label>harnessType</label>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+  <br>
+  <br>
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Make</th>
+        <th>Harness Type</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="vin in data" ng-include="checkEdit(vin)">
+      </tr>
+      <script type="text/ng-template" id="display">
+        <td>
+          <label ng-bind="vin.year"></label>
+        </td>
+        <td>
+          <label ng-bind="vin.make"></label>
+        </td>
+        <td>
+          <label ng-bind="vin.harnessType"></label>
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary" ng-click="editVin(vin)">Edit</button>
+          <button type="button" class="btn btn-danger" ng-click="deleteVin(vin)">Delete</button>
+        </td>
+      </script>
+      <script type="text/ng-template" id="edit">
+        <td>
+          <input type="number" ng-model=vin.year class="form-control input-sm" />
+        </td>
+        <td>
+          <input type="text" ng-model=vin.make class="form-control input-sm" />
+        </td>
+        <td>
+          <input type="number" ng-model=vin.harnessType class="form-control input-sm" />
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary" ng-click="updateVin(vin)">Save</button>
+          <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
+        </td>
+      </script>
+    </tbody>
+  </table>
+
 
 </body>
 <script type="text/javascript">
   angular.module("myApp", [])
     .controller("mainController", function($scope, $http) {
       $scope.data;
-      $scope.header = ['year', 'make', 'harness type']
+      $scope.selected = {};
+
       $scope.receiveData = function() {
         $http({
           method: 'GET',
@@ -45,45 +95,69 @@
         });
       };
       $scope.receiveData();
+
+      /*
+      $scope.insertVin = function() {
+        $scope.insertData = {
+          year: $scope.year,
+          make: $scope.make,
+          harnessType: $scope.harnessType
+        }
+        $http({
+          method: 'POST',
+          url: 'http://localhost:8000/insert/submit',
+          data: insertData,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        });
+      }; */
+
+      $scope.deleteVin = function(vin) {
+        $http({
+          method: 'POST',
+          url: 'http://localhost:8000/delete/submit',
+          data: vin,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        });
+      };
+      $scope.updateVin = function(vin) {
+        $scope.updateData = {
+          year: vin.year,
+          make: vin.make,
+          harnessType: vin.harnessType,
+          yearId: $scope.selected.year,
+          makeId: $scope.selected.make
+        }
+        console.log($scope.updateData);
+        /*
+        $http({
+          method: 'POST',
+          url: 'http://localhost:8000/update/submit',
+          data: $scope.updateData,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        }); */
+      };
+      $scope.checkEdit = function(vin) {
+        if (vin.make === $scope.selected.make && vin.year === $scope.selected.year) {
+          return 'edit';
+        } else return 'display';
+      };
+
+      $scope.reset = function() {
+        $scope.selected = {};
+      };
+
+      $scope.editVin = function(vin) {
+        $scope.selected = angular.copy(vin);
+      };
+
+
     });
 </script>
-<style>
-  .head {
-    background: gainsboro;
-  }
 
-  body {
-    background: ghostwhite;
-    border-style: solid;
-    border-width:1px;
-  }
-
-  .even {
-    background: gainsboro;
-  }
-
-  .odd {
-    background: ghostwhite;
-  }
-
-  .list {
-    display: inline-block;
-    width: 25%;
-    text-align: justify;
-  }
-
-  ul {
-    padding: 0;
-    list-style-type: none;
-  }
-
-  .table {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 11px;
-  }
-  .table_head {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 13px;
-  }
-</style>
 </html>

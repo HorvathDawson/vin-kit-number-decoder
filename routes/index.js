@@ -21,7 +21,7 @@ async function openDataBases() {
 }
 
 router.get('/crud', function(req, res, next) {
-  res.sendfile('crudForm.html', {root: path.join(__dirname, '../public')})
+  res.sendfile('testdisplay.html', {root: path.join(__dirname, '../public')})
 });
 
 router.get('/getAllData', async function(req, res, next) {
@@ -41,16 +41,28 @@ router.post('/insert/submit', async function(req, res, next) {
 });
 
 router.post('/update/submit', async function(req, res, next) {
-/*
+  console.log(req.body);
   var updateData = {
     year: req.body.year,
     make: req.body.make,
-    harnessType: req.body.harnessType
-  } */
-  
+    harnessType: req.body.harnessType,
+    yearId: req.body.yearId,
+    makeId: req.body.makeId
+  }
   const [mainDb, specialDb] = await openDataBases();
-  await mainDb.run( UPDATE_DATA, updateData.year, updateData.make, updateData.harnessType, );
+  await mainDb.run( UPDATE_DATA, updateData.year, updateData.make, updateData.harnessType, updateData.yearId, updateData.makeId);
   res.redirect('/crud');
 });
+router.post('/delete/submit', async function(req, res, next) {
+
+  var deleteData = {
+    year: req.body.year,
+    make: req.body.make
+  }
+  const [mainDb, specialDb] = await openDataBases();
+  await mainDb.run( DELETE_DATA, deleteData.year, deleteData.make);
+  res.redirect('/crud');
+});
+
 
 module.exports = router;
