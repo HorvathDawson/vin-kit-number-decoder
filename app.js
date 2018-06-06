@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
 
 var routes = require('./routes/index');
+var fileRoutes = require('./routes/fileUpload');
 
 var app = express();
 
@@ -22,8 +23,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/script/bootstrap', express.static(path.join(__dirname, 'node_modules/angular-ui-bootstrap/dist')));
+app.use('/script/file-model', express.static(path.join(__dirname, 'node_modules/xlsx/dist')));
 app.use('/', routes);
+app.use('/file', fileRoutes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

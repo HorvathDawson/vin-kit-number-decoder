@@ -1,5 +1,5 @@
-angular.module('myApp', ['file-model'])
-  .controller('importController', function(vinNumberService) {
+angular.module('myApp')
+  .controller('importController', function($window, vinNumberService) {
     var vm = this;
     vm.vinResults;
     vm.joinedVinNumbers;

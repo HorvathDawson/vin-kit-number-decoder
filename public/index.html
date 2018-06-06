@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" ng-app="myApp">
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js'></script>
+<script src="./angular/index.controller.js"></script>
+<script src='/script/file-model/xlsx.full.min.js'></script>
+<script src='/script/bootstrap/ui-bootstrap.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src='./angular/angular-file-model.js'></script>
+<script src='./angular/importFile.controller.js'></script>
+<script src='./angular/importedVinNumbers.service.js'></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" media="screen" />
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <div style="float: right;">
+    <div>
+      <form method='post' action='/file/upload' id="uploadForm" ref="uploadForm" enctype="multipart/form-data">
+        <input type='file' name="spreadsheet">
+        <button type='sumbit'>Submit</button>
+        <button type='reset' value='reset'>Clear</button>
+      </form>
+    </div>
+  </div>
+  <div ng-controller="mainController">
+    <form action="/insert/submit" method="post">
+
+      <input type="number" name="year">
+      <label>year</label>
+      <br>
+
+      <input type="text" name="make">
+      <label>make</label>
+      <br>
+
+      <input type="number" name="harnessType">
+      <label>harnessType</label>
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Make</th>
+          <th>Harness Type</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="truck in trucks" ng-include="checkEdit(truck)">
+        </tr>
+        <script type="text/ng-template" id="display">
+          <td>
+            <label ng-bind="truck.year"></label>
+          </td>
+          <td>
+            <label ng-bind="truck.make"></label>
+          </td>
+          <td>
+            <label ng-bind="truck.harnessType"></label>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" ng-click="editTruck(truck)">Edit</button>
+            <button type="button" class="btn btn-danger" ng-click="deleteTruck(truck)">Delete</button>
+          </td>
+        </script>
+        <script type="text/ng-template" id="edit">
+          <td>
+            <label ng-bind="truck.year"></label>
+          </td>
+          <td>
+            <label ng-bind="truck.make"></label>
+          </td>
+          <td>
+            <input type="number" ng-model='truck.harnessType' class="form-control input-sm" />
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" ng-click="updateTruck(truck)">Save</button>
+            <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
+          </td>
+        </script>
+      </tbody>
+    </table>
+  </div>
+
+
+
+</body>
+
+</html>
