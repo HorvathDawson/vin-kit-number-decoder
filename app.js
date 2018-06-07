@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
 
 var routes = require('./routes/index');
-var fileRoutes = require('./routes/fileUpload');
+var fileRoutes = require('./routes/spreadSheet');
+var crudRoutes = require('./routes/crud');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use('/script/bootstrap', express.static(path.join(__dirname, 'node_modules/a
 app.use('/script/file-model', express.static(path.join(__dirname, 'node_modules/xlsx/dist')));
 app.use('/', routes);
 app.use('/file', fileRoutes);
+app.use('/crud', crudRoutes);
 
 
 // catch 404 and forward to error handler
