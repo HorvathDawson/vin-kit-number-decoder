@@ -3,14 +3,16 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" media="screen" />
+
 <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
 <script src="./angular/crud.controller.js"></script>
 <script src="./angular/modal.controller.js"></script>
-<script src='/script/file-model/xlsx.full.min.js'></script>
 <script src='/script/bootstrap/ui-bootstrap-tpls.js'></script>
+<script src="/script/file-upload/ng-file-upload.min.js"></script>
+<script src="/script/file-upload/ng-file-upload-shim.min.js"></script>
 
 <head>
   <meta charset="utf-8">
@@ -18,79 +20,94 @@
 </head>
 
 <body>
-  <div ng-controller='modalController'>
-    <form action="/crud/insert" method="post">
-      <input type="number" name="year">
-      <label>year</label>
-      <input type="text" name="make">
-      <label>make</label>
-      <input type="number" name="harnessType">
-      <label>harnessType</label>
-      <button type="submit">Submit</button>
-    </form>
-    <form method='post' action='/file/upload' id="uploadForm" ref="uploadForm" enctype="multipart/form-data">
-      <input type='file' name="spreadsheet">
-      <button type='sumbit'>Submit</button>
-      <button type='reset' value='reset'>Clear</button>
-    </form>
-
-  </div>
   <div ng-controller="crudController">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Make</th>
-          <th>Harness Type</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="vehicle in vehicles" ng-include="checkEdit(vehicle)">
-        </tr>
-        <script type="text/ng-template" id="display">
-          <td>
-            <label ng-bind="vehicle.year"></label>
-          </td>
-          <td>
-            <label ng-bind="vehicle.make"></label>
-          </td>
-          <td>
-            <label ng-bind="vehicle.harnessType"></label>
-          </td>
-          <td>
-            <button type="button" class="btn btn-primary" ng-click="editVehicle(vehicle)">Edit</button>
-            <button class="btn btn-danger" uib-popover-template="'deletePopover'">Delete</button>
-          </td>
-        </script>
-        <script type="text/ng-template" id="edit">
-          <td>
-            <label ng-bind="vehicle.year"></label>
-          </td>
-          <td>
-            <label ng-bind="vehicle.make"></label>
-          </td>
-          <td>
-            <input type="number" ng-model='vehicle.harnessType' class="form-control input-sm" />
-          </td>
-          <td>
-            <button type="button" class="btn btn-primary" ng-click="updateVehicle(vehicle)">Save</button>
-            <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
-          </td>
-        </script>
-        <script type="text/ng-template" id="deletePopover">
-          <div>
-              <div class="popover-arrow"></div>
-              <h3 class="popover-title">Are you sure?</h3>
-              <div class="popover-content">
-                  <button class="btn btn-danger" ng-click="deleteVehicle(vehicle)">Confirm</button>
-                  <button class="btn btn-primary" ng-click="reset()">Stooopp!</button>
-              </div>
-          </div>
-        </script>
-      </tbody>
-    </table>
+    <div>
+      <form ng-submit="insertVehicle()">
+        <input type="number" ng-model="insertedYear">
+        <label>year</label>
+        <input type="text" ng-model="insertedMake">
+        <label>make</label>
+        <input type="number" ng-model="insertedHarnessType">
+        <label>harnessType</label>
+        <button type="submit">Submit</button>
+      </form>
+
+      <form ng-submit="fileUpload()">
+        <input
+            type="file"
+            ngf-select
+            ng-model="spreadsheet"
+            ngf-pattern="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ngf-max-size="20MB"
+            />
+        <button type='sumbit'>Submit</button>
+        <button type='reset' value='reset'>Clear</button>
+      </form>
+      <!--
+      <form action="/file/upload" enctype="multipart/form-data" method="post">
+          <input type="file" name="file">
+          <input type="submit" value="Upload">
+      </form> -->
+    </div>
+    <div >
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Make</th>
+            <th>Harness Type</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="vehicle in vehicles" ng-include="checkEdit(vehicle)">
+          </tr>
+          <script type="text/ng-template" id="display">
+            <td>
+              <label ng-bind="vehicle.year"></label>
+            </td>
+            <td>
+              <label ng-bind="vehicle.make"></label>
+            </td>
+            <td>
+              <label ng-bind="vehicle.harnessType"></label>
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" ng-click="editVehicle(vehicle)">Edit</button>
+              <button class="btn btn-danger" uib-popover-template="'deletePopover'">Delete</button>
+            </td>
+          </script>
+          <script type="text/ng-template" id="edit">
+            <td>
+              <label ng-bind="vehicle.year"></label>
+            </td>
+            <td>
+              <label ng-bind="vehicle.make"></label>
+            </td>
+            <td>
+              <input type="number" ng-model='vehicle.harnessType' class="form-control input-sm" />
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" ng-click="updateVehicle(vehicle)">Save</button>
+              <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
+            </td>
+          </script>
+          <script type="text/ng-template" id="deletePopover">
+            <div>
+                <div class="popover-arrow"></div>
+                <h3 class="popover-title">Are you sure?</h3>
+                <div class="popover-content">
+                    <button class="btn btn-danger" ng-click="deleteVehicle(vehicle)">Confirm</button>
+                    <button class="btn btn-primary" ng-click="reset()">Stooopp!</button>
+                </div>
+            </div>
+          </script>
+        </tbody>
+      </table>
+    </div>
   </div>
+
 
 </body>
 

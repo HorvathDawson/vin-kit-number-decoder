@@ -1,6 +1,5 @@
 var crud = require('../services/dbInteraction.js');
 
-
 const comparison = {
   compare: async function(input){
     try{

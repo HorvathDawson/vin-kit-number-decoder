@@ -24,8 +24,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/script/bootstrap', express.static(path.join(__dirname, 'node_modules/angular-ui-bootstrap/dist')));
-app.use('/script/file-model', express.static(path.join(__dirname, 'node_modules/xlsx/dist')));
+app.use('/script/bootstrap', express.static(path.join(__dirname, './node_modules/angular-ui-bootstrap/dist')));
+app.use('/script/file-upload', express.static(path.join(__dirname, './node_modules/ng-file-upload/dist')));
+
 app.use('/', routes);
 app.use('/file', fileRoutes);
 app.use('/crud', crudRoutes);
