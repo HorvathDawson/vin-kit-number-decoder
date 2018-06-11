@@ -1,8 +1,8 @@
 var crud = require('../services/dbInteraction.js');
 
 const comparison = {
-  compare: async function(input){
-    try{
+  async compare(input) {
+    try {
       let database = await crud.loadAllVehicles();
       var value = [];
       var data = [];
@@ -10,12 +10,20 @@ const comparison = {
         value[index] = await database.filter((forCompare) => {
           return forCompare.year + ':' + forCompare.make === vehicle.ModelYear + ':' + vehicle.Make;
         })[0];
-        if(value[index]){
-          vehicle = Object.assign(vehicle, {success: true});
-          value[index] = Object.assign(vehicle, {harnessType: value[index].harnessType});
-        }else{
-          vehicle = Object.assign(vehicle, {success: false});
-          value[index] = Object.assign(vehicle, {harnessType: 'Not Found'});
+        if (value[index]) {
+          vehicle = Object.assign(vehicle, {
+            success: true
+          });
+          value[index] = Object.assign(vehicle, {
+            harnessType: value[index].harnessType
+          });
+        } else {
+          vehicle = Object.assign(vehicle, {
+            success: false
+          });
+          value[index] = Object.assign(vehicle, {
+            harnessType: 'Not Found'
+          });
         }
         value[index] = {
           VIN: value[index].VIN,
@@ -34,7 +42,7 @@ const comparison = {
         }
       });
       return value;
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
   }

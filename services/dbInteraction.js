@@ -6,42 +6,44 @@ var SELECT_ALL_DATA = 'SELECT * FROM regularVinNumber';
 var UPDATE_DATA = 'UPDATE regularVinNumber SET harnessType = ? WHERE year = ? AND make = ?';
 var DELETE_DATA = 'DELETE FROM regularVinNumber WHERE year = ? AND make = ?';
 async function openDataBase() {
-  try{
-    return await sqlite.open('./db/mainVinDb.db', { Promise })
-  } catch(error) {
+  try {
+    return await sqlite.open('./db/mainVinDb.db', {
+      Promise
+    })
+  } catch (error) {
     return Promise.reject(error);
   }
 }
 const crud = {
-  loadAllVehicles: async function() {
-    try{
+  async loadAllVehicles() {
+    try {
       const mainDb = await openDataBase();
       return mainDb.all(SELECT_ALL_DATA);
-    } catch(error) {
+    } catch (error) {
       return Promise.reject(error);
     }
   },
-  insertVehicle: async function(data) {
+  async insertVehicle(data) {
     try {
       const mainDb = await openDataBase();
-      await mainDb.run( INSERT_DATA, data.year, data.make, data.harnessType);
-    } catch(error) {
+      await mainDb.run(INSERT_DATA, data.year, data.make, data.harnessType);
+    } catch (error) {
       return Promise.reject(error);
     }
   },
-  deleteVehicle: async function(data) {
+  async deleteVehicle(data) {
     try {
       const mainDb = await openDataBase();
-      await mainDb.run( DELETE_DATA, data.year, data.make);
-    } catch(error) {
+      await mainDb.run(DELETE_DATA, data.year, data.make);
+    } catch (error) {
       return Promise.reject(error);
     }
   },
-  updateVehicle: async function(data) {
+  async updateVehicle(data) {
     try {
       const mainDb = await openDataBase();
-      await mainDb.run( UPDATE_DATA, data.harnessType, data.yearId, data.makeId);
-    } catch(error) {
+      await mainDb.run(UPDATE_DATA, data.harnessType, data.yearId, data.makeId);
+    } catch (error) {
       return Promise.reject(error);
     }
   }

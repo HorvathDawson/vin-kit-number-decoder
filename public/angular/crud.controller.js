@@ -9,30 +9,18 @@ angular.module("myApp")
       var file = $scope.spreadsheet;
       var payload = new FormData();
       payload.append('file', file);
-
-      for (var key of payload.entries()) {
-        console.log(key[0] + ', ' + key[1]);
-      }
-      /*
-      $http({
-        method: 'POST',
-        url: 'http://localhost:8000/file/upload',
-        data: payload,
-        transformRequest: angular.identity,
-        headers: {
-          'Content-Type': undefined
-        }
-      }) */
-      $http.post('http://localhost:8000/file/upload',payload, {
-                  transformRequest: angular.identity,
-                  headers: {'Content-Type': undefined}
-      })
-      .then(function(data) {
-        console.log(data);
-        $scope.receiveData();
-      }, function(err) {
-        console.log("error adding value", err);
-      });
+      $http.post('http://localhost:8000/file/upload', payload, {
+          transformRequest: angular.identity,
+          headers: {
+            'Content-Type': undefined
+          }
+        })
+        .then(function(data) {
+          console.log(data);
+          $scope.receiveData();
+        }, function(err) {
+          console.log("error adding value", err);
+        });
     };
 
     $scope.receiveData = function() {
