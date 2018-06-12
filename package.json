@@ -22,6 +22,7 @@
     "multer": "^1.3.0",
     "ng-file-upload": "^12.2.13",
     "request": "^2.87.0",
+    "request-promise": "^4.2.2",
     "serve-favicon": "^2.5.0",
     "sqlite": "^2.9.2",
     "xlsx": "^0.12.13"

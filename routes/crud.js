@@ -16,8 +16,7 @@ router.post('/insert', async function(req, res, next) {
     res.end();
   }catch(error){
     // TODO: make a popup that displays this
-    res.render('error', {
-      message: 'make and year already exist',
+    res.send({
       error: error
     })
   }

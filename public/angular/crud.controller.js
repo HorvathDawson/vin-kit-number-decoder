@@ -2,8 +2,21 @@ angular.module("myApp", ['ui.bootstrap', 'ngFileUpload']);
 
 angular.module("myApp")
   .controller("crudController", function($scope, $http) {
+    var vm = this;
     $scope.vehicles;
     $scope.selected = {};
+    $scope.alerts = [];
+
+    $scope.closeAlert = function(index) {
+      $scope.alerts.splice(index, 1);
+    };
+
+    $scope.addAlert = function(msg, type) {
+      $scope.alerts.push({
+        msg: msg,
+        type: type
+      });
+    };
 
     $scope.fileUpload = function() {
       var file = $scope.spreadsheet;
@@ -76,19 +89,34 @@ angular.module("myApp")
         year: this.insertedYear,
         make: this.insertedMake
       }
-      $http({
-        method: 'POST',
-        url: 'http://localhost:8000/crud/insert',
-        data: updateData,
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      }).then(function() {
-        $scope.receiveData();
-      }, function(err) {
-        console.log("error adding value", err);
-      });
-    };
+      if (this.insertedMake && this.insertedYear) {
+        $http({
+          method: 'POST',
+          url: 'http://localhost:8000/crud/insert',
+          data: updateData,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        }).then(function(data) {
+          if (JSON.stringify(data.data.error) == JSON.stringify({
+              errno: 19,
+              code: "SQLITE_CONSTRAINT"
+            })) {
+            $scope.addAlert('vehicle make and year is already in database', 'danger')
+          } else {
+            $scope.addAlert('you have successfully added a vehicle', 'success')
+          }
+          $scope.receiveData();
+        }, function(err) {
+          console.log("error adding value", err);
+        });
+      }else{
+        $scope.addAlert('missing field', 'danger');
+      }
+    }
+
+
+
     $scope.checkEdit = function(vehicle) {
       if (vehicle.make === $scope.selected.make && vehicle.year === $scope.selected.year) {
         return 'edit';

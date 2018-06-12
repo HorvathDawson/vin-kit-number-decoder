@@ -17,40 +17,61 @@
 <head>
   <meta charset="utf-8">
   <title>Vin Decoder</title>
+  <div class="header">
+    <label>Vin Decoder</label>
+  </div>
 </head>
 
 <body>
   <div ng-controller="crudController">
-    <div>
-      <form ng-submit="insertVehicle()">
-        <input type="number" ng-model="insertedYear">
-        <label>year</label>
-        <input type="text" ng-model="insertedMake">
-        <label>make</label>
-        <input type="number" ng-model="insertedHarnessType">
-        <label>harnessType</label>
-        <button type="submit">Submit</button>
-      </form>
-
-      <form ng-submit="fileUpload()">
-        <input
-            type="file"
-            ngf-select
-            ng-model="spreadsheet"
-            ngf-pattern="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
-            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            ngf-max-size="20MB"
-            />
-        <button type='sumbit'>Submit</button>
-        <button type='reset' value='reset'>Clear</button>
-      </form>
-      <!--
-      <form action="/file/upload" enctype="multipart/form-data" method="post">
-          <input type="file" name="file">
-          <input type="submit" value="Upload">
-      </form> -->
-    </div>
     <div >
+      <div class="column">
+        <label>Insert Vehicle</label>
+        <form ng-submit="insertVehicle()">
+          <div ng-class="{'has-error' : !insertedYear}">
+            <label>year</label>
+            <input type="number" ng-model="insertedYear" class="form-control input-sm"
+             uib-tooltip="must enter something into this field"
+             tooltip-placement="top"
+             tooltip-trigger="'mouseenter'"
+             tooltip-enable="!insertedYear">
+          </div>
+          <div ng-class="{'has-error' : !insertedMake}">
+            <label>make</label>
+            <input type="text" ng-model="insertedMake" class="form-control input-sm"
+             uib-tooltip="must enter something into this field"
+             tooltip-placement="top"
+             tooltip-trigger="'mouseenter'"
+             tooltip-enable="!insertedMake">
+          </div>
+          <div>
+            <label>harnessType</label>
+            <input type="number" ng-model="insertedHarnessType" class="form-control input-sm">
+          </div>
+          <div>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          <br>
+          <div uib-alert dismiss-on-timeout="4000" ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+        </form>
+      </div>
+      <div class="column">
+        <form ng-submit="fileUpload()">
+          <label>upload .XLSX spreadsheet</label>
+          <br><br>
+          <label class="btn btn-default btn-file">
+            Upload file
+            <input onchange="$('#upload-file-info').html(this.files[0].name)" style="display: none;" type="file" ngf-select ng-model="spreadsheet" ngf-pattern="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ngf-max-size="20MB" />
+          </label>
+          <span class='label label-info' id="upload-file-info"></span>
+          <br><br>
+          <button type='sumbit' class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <div>
       <table class="table">
         <thead>
           <tr>
@@ -95,12 +116,12 @@
           </script>
           <script type="text/ng-template" id="deletePopover">
             <div>
-                <div class="popover-arrow"></div>
-                <h3 class="popover-title">Are you sure?</h3>
-                <div class="popover-content">
-                    <button class="btn btn-danger" ng-click="deleteVehicle(vehicle)">Confirm</button>
-                    <button class="btn btn-primary" ng-click="reset()">Stooopp!</button>
-                </div>
+              <div class="popover-arrow"></div>
+              <h3 class="popover-title">Are you sure?</h3>
+              <div class="popover-content">
+                <button class="btn btn-danger" ng-click="deleteVehicle(vehicle)">Confirm</button>
+                <button class="btn btn-primary" ng-click="reset()">Stooopp!</button>
+              </div>
             </div>
           </script>
         </tbody>

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var request = require('request');
+var rp = require('request-promise');
 var comparison = require('../services/vinComparison.js');
 var helper = require('../services/spreadSheetHelper.js');
 var test = require('../services/vinWebApi.js');
@@ -27,20 +27,19 @@ router.post('/upload', upload.single('file'), async function(req, res, next) {
         data: joinedVinNumbers
       }
     };
-    request(options, function(err, respond, body) {
+    // TODO: make it *promise based then add excel output, and finish database
+    rp(options).then((body) => {
       let json = JSON.parse(body);
-      var test = json.Results.map((vinInfo, index) => {
+      return json.Results.map((vinInfo, index) => {
         return Object.assign(vinInfo, vinData[index]);
       })
-      comparison.compare(test).then((value) => {
-        console.log(value);
-        res.send(JSON.stringify(value));
-      }).catch((err) => {
-        console.log(err);
-      })
-
+    }).then((body) => {
+      return comparison.compare(body)
+    }).then((body) => {
+      res.send(JSON.stringify(body));
+    }).catch((err) => {
+      console.log(err);
     });
-
   } catch (error) {
     res.render('error', {
       message: error.message,
