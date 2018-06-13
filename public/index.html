@@ -9,10 +9,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
 <script src="./angular/crud.controller.js"></script>
-<script src="./angular/modal.controller.js"></script>
 <script src='/script/bootstrap/ui-bootstrap-tpls.js'></script>
 <script src="/script/file-upload/ng-file-upload.min.js"></script>
 <script src="/script/file-upload/ng-file-upload-shim.min.js"></script>
+<script src="/script/xlsx/xlsx.core.min.js"></script>
 
 <head>
   <meta charset="utf-8">
@@ -23,46 +23,56 @@
 </head>
 
 <body>
-  <div ng-controller="crudController">
+  <div ng-controller="crudController as crud">
     <div >
       <div class="column">
         <label>Insert Vehicle</label>
-        <form ng-submit="insertVehicle()">
-          <div ng-class="{'has-error' : !insertedYear}">
+        <form ng-submit="crud.insertVehicle()">
+          <div ng-class="{'has-error' : !crud.insertedYear}">
             <label>year</label>
-            <input type="number" ng-model="insertedYear" class="form-control input-sm"
+            <input type="number" ng-model="crud.insertedYear" class="form-control input-sm"
              uib-tooltip="must enter something into this field"
              tooltip-placement="top"
              tooltip-trigger="'mouseenter'"
-             tooltip-enable="!insertedYear">
+             tooltip-enable="!crud.insertedYear">
           </div>
-          <div ng-class="{'has-error' : !insertedMake}">
+          <div ng-class="{'has-error' : !crud.insertedMake}">
             <label>make</label>
-            <input type="text" ng-model="insertedMake" class="form-control input-sm"
+            <input type="text" ng-model="crud.insertedMake" class="form-control input-sm"
              uib-tooltip="must enter something into this field"
              tooltip-placement="top"
              tooltip-trigger="'mouseenter'"
-             tooltip-enable="!insertedMake">
+             tooltip-enable="!crud.insertedMake">
           </div>
           <div>
             <label>harnessType</label>
-            <input type="number" ng-model="insertedHarnessType" class="form-control input-sm">
+            <input type="number" ng-model="crud.insertedHarnessType" class="form-control input-sm">
           </div>
           <div>
             <br>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
           <br>
-          <div uib-alert dismiss-on-timeout="4000" ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+          <div uib-alert dismiss-on-timeout="4000"
+               ng-repeat="alert in crud.alerts"
+               ng-class="'alert-' + (alert.type || 'warning')"
+               close="crud.closeAlert($index)"
+               >{{alert.msg}}</div>
         </form>
       </div>
       <div class="column">
-        <form ng-submit="fileUpload()">
+        <form ng-submit="crud.fileUpload()">
           <label>upload .XLSX spreadsheet</label>
           <br><br>
           <label class="btn btn-default btn-file">
             Upload file
-            <input onchange="$('#upload-file-info').html(this.files[0].name)" style="display: none;" type="file" ngf-select ng-model="spreadsheet" ngf-pattern="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ngf-max-size="20MB" />
+            <input onchange="$('#upload-file-info').html(this.files[0].name)"
+                   style="display: none;"
+                   type="file"
+                   ngf-select ng-model="crud.spreadsheet"
+                   ngf-pattern="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+                   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                   ngf-max-size="20MB" />
           </label>
           <span class='label label-info' id="upload-file-info"></span>
           <br><br>
@@ -82,7 +92,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="vehicle in vehicles" ng-include="checkEdit(vehicle)">
+          <tr ng-repeat="vehicle in crud.vehicles" ng-include="crud.checkEdit(vehicle)">
           </tr>
           <script type="text/ng-template" id="display">
             <td>
@@ -95,7 +105,7 @@
               <label ng-bind="vehicle.harnessType"></label>
             </td>
             <td>
-              <button type="button" class="btn btn-primary" ng-click="editVehicle(vehicle)">Edit</button>
+              <button type="button" class="btn btn-primary" ng-click="crud.editVehicle(vehicle)">Edit</button>
               <button class="btn btn-danger" uib-popover-template="'deletePopover'">Delete</button>
             </td>
           </script>
@@ -110,8 +120,8 @@
               <input type="number" ng-model='vehicle.harnessType' class="form-control input-sm" />
             </td>
             <td>
-              <button type="button" class="btn btn-primary" ng-click="updateVehicle(vehicle)">Save</button>
-              <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
+              <button type="button" class="btn btn-primary" ng-click="crud.updateVehicle(vehicle)">Save</button>
+              <button type="button" class="btn btn-danger" ng-click="crud.reset()">Cancel</button>
             </td>
           </script>
           <script type="text/ng-template" id="deletePopover">
@@ -119,8 +129,8 @@
               <div class="popover-arrow"></div>
               <h3 class="popover-title">Are you sure?</h3>
               <div class="popover-content">
-                <button class="btn btn-danger" ng-click="deleteVehicle(vehicle)">Confirm</button>
-                <button class="btn btn-primary" ng-click="reset()">Stooopp!</button>
+                <button class="btn btn-danger" ng-click="crud.deleteVehicle(vehicle)">Confirm</button>
+                <button class="btn btn-primary" ng-click="crud.reset()">Stooopp!</button>
               </div>
             </div>
           </script>

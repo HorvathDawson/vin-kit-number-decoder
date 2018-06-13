@@ -32,13 +32,13 @@ const comparison = {
           model: value[index].Model,
           engineManufacturer: value[index].EngineManufacturer,
           engineModel: value[index].EngineModel,
-          errorCode: value[index].ErrorCode,
-          suggestedVIN: value[index].SuggestedVIN,
           kitNumber: value[index].kitPartNumber,
           harnessType: value[index].harnessType,
           success: value[index].success,
           plantLocation: value[index].PlantCountry,
-          vehicleType: value[index].VehicleType
+          vehicleType: value[index].VehicleType,
+          suggestedVIN: value[index].SuggestedVIN,
+          errorCode: value[index].ErrorCode
         }
       });
       return value;

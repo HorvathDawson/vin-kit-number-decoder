@@ -1,89 +1,104 @@
 angular.module("myApp", ['ui.bootstrap', 'ngFileUpload']);
 
 angular.module("myApp")
-  .controller("crudController", function($scope, $http) {
+  .controller("crudController", function($http) {
     var vm = this;
-    $scope.vehicles;
-    $scope.selected = {};
-    $scope.alerts = [];
+    vm.vehicles;
+    vm.selected = {};
+    vm.alerts = [];
 
-    $scope.closeAlert = function(index) {
-      $scope.alerts.splice(index, 1);
+    vm.closeAlert = closeAlert;
+    vm.addAlert = addAlert;
+    vm.fileUpload = fileUpload;
+    vm.receiveData = receiveData;
+    vm.deleteVehicle = deleteVehicle;
+    vm.updateVehicle = updateVehicle;
+    vm.insertVehicle = insertVehicle;
+    vm.checkEdit = checkEdit;
+    vm.reset = reset;
+    vm.editVehicle = editVehicle;
+
+    vm.receiveData();
+
+    function closeAlert(index) {
+      vm.alerts.splice(index, 1);
     };
 
-    $scope.addAlert = function(msg, type) {
-      $scope.alerts.push({
+    function addAlert(msg, type) {
+      vm.alerts.push({
         msg: msg,
         type: type
       });
     };
 
-    $scope.fileUpload = function() {
-      var file = $scope.spreadsheet;
+    function fileUpload() {
+      var file = vm.spreadsheet;
       var payload = new FormData();
       payload.append('file', file);
-      $http.post('http://localhost:8000/file/upload', payload, {
+      $http.post('/file/upload', payload, {
           transformRequest: angular.identity,
           headers: {
             'Content-Type': undefined
           }
         })
         .then(function(data) {
+          XLSX.writeFile(data.data, "sheetjs.xlsx");
           console.log(data);
-          $scope.receiveData();
+          vm.receiveData();
+
         }, function(err) {
           console.log("error adding value", err);
         });
     };
 
-    $scope.receiveData = function() {
+    function receiveData() {
       $http({
         method: 'GET',
-        url: 'http://localhost:8000/crud/loadAll'
+        url: '/crud/loadAll'
       }).then(function successCallback(response) {
-        $scope.vehicles = response.data;
+        vm.vehicles = response.data;
       }, function errorCallback(error) {
         console.log('error getting data', error);
       });
     };
-    $scope.receiveData();
 
-    $scope.deleteVehicle = function(vehicle) {
+    function deleteVehicle(vehicle) {
       $http({
         method: 'POST',
-        url: 'http://localhost:8000/crud/delete',
+        url: '/crud/delete',
         data: vehicle,
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         }
       }).then(function() {
-        $scope.receiveData();
+        vm.receiveData();
       }, function(err) {
         console.log("error deleting value", err);
       });
     };
 
-    $scope.updateVehicle = function(vehicle) {
-      $scope.updateData = {
+    function updateVehicle(vehicle) {
+      vm.updateData = {
         harnessType: vehicle.harnessType,
-        yearId: $scope.selected.year,
-        makeId: $scope.selected.make
+        yearId: vm.selected.year,
+        makeId: vm.selected.make
       }
       $http({
         method: 'POST',
-        url: 'http://localhost:8000/crud/update',
-        data: $scope.updateData,
+        url: '/crud/update',
+        data: vm.updateData,
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         }
       }).then(function() {
-        $scope.selected = {};
-        $scope.receiveData();
+        vm.selected = {};
+        vm.receiveData();
       }, function(err) {
         console.log("error updating value", err);
       });
     };
-    $scope.insertVehicle = function() {
+
+    function insertVehicle() {
       var updateData = {
         harnessType: this.insertedHarnessType,
         year: this.insertedYear,
@@ -92,7 +107,7 @@ angular.module("myApp")
       if (this.insertedMake && this.insertedYear) {
         $http({
           method: 'POST',
-          url: 'http://localhost:8000/crud/insert',
+          url: '/crud/insert',
           data: updateData,
           headers: {
             'Content-Type': 'application/json; charset=utf-8'
@@ -102,33 +117,31 @@ angular.module("myApp")
               errno: 19,
               code: "SQLITE_CONSTRAINT"
             })) {
-            $scope.addAlert('vehicle make and year is already in database', 'danger')
+            vm.addAlert('vehicle make and year is already in database', 'danger')
           } else {
-            $scope.addAlert('you have successfully added a vehicle', 'success')
+            vm.addAlert('you have successfully added a vehicle', 'success')
           }
-          $scope.receiveData();
+          vm.receiveData();
         }, function(err) {
           console.log("error adding value", err);
         });
-      }else{
-        $scope.addAlert('missing field', 'danger');
+      } else {
+        vm.addAlert('missing field', 'danger');
       }
     }
 
-
-
-    $scope.checkEdit = function(vehicle) {
-      if (vehicle.make === $scope.selected.make && vehicle.year === $scope.selected.year) {
+    function checkEdit(vehicle) {
+      if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
         return 'edit';
       } else return 'display';
     };
 
-    $scope.reset = function() {
-      $scope.selected = {};
-      $scope.receiveData();
+    function reset() {
+      vm.selected = {};
+      vm.receiveData();
     };
 
-    $scope.editVehicle = function(vehicle) {
-      $scope.selected = angular.copy(vehicle);
+    function editVehicle(vehicle) {
+      vm.selected = angular.copy(vehicle);
     };
   });
