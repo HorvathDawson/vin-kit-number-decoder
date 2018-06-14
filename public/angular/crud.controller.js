@@ -2,7 +2,6 @@ angular.module("myApp", ['ui.bootstrap', 'ngFileUpload']);
 
 angular.module("myApp")
   .controller("crudController", function($http) {
-    // TODO: add a clear all in insert
     var vm = this;
     vm.vehicles;
     vm.selected = {};
@@ -96,19 +95,19 @@ angular.module("myApp")
       });
     };
     function clearVehicle() {
-        this.insertedHarnessTypeOne = null;
-        this.insertedHarnessTypeTwo = null;
-        this.insertedYear = null;
-        this.insertedMake = null;
+        vm.insertedHarnessTypeOne = null;
+        vm.insertedHarnessTypeTwo = null;
+        vm.insertedYear = null;
+        vm.insertedMake = null;
       }
     function insertVehicle() {
       var insertData = {
-        harnessTypeOne: this.insertedHarnessTypeOne,
-        harnessTypeTwo: this.insertedHarnessTypeTwo,
-        year: this.insertedYear,
-        make: this.insertedMake
+        harnessTypeOne: vm.insertedHarnessTypeOne,
+        harnessTypeTwo: vm.insertedHarnessTypeTwo,
+        year: vm.insertedYear,
+        make: vm.insertedMake
       }
-      if (this.insertedMake && this.insertedYear) {
+      if (vm.insertedMake && vm.insertedYear) {
         $http({
           method: 'POST',
           url: '/crud/insert',

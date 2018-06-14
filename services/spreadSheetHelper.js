@@ -25,11 +25,14 @@ const helper = {
       console.log('Deleted ' + filename);
     })
   },
-  async makeWorkBook(jsonData) {
+  async makeWorkBook() {
     var wb = XLSX.utils.book_new();
+    return wb;
+  },
+  async addDataWb(wb, jsonData, name){
     var ws = XLSX.utils.json_to_sheet(jsonData);
-    XLSX.utils.book_append_sheet(wb, ws, 'VinData');
-    return wb
+    XLSX.utils.book_append_sheet(wb, ws, name);
+    return wb;
   }
 }
 

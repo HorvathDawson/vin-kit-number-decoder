@@ -36,7 +36,10 @@ router.post('/upload', upload.single('file'), async function(req, res, next) {
     }).then((body) => {
       return comparison.compare(body)
     }).then(async (body) => {
-      var wb = await helper.makeWorkBook(body);
+      var wb = await helper.makeWorkBook();
+      wb = await helper.addDataWb(wb, body.errorData, 'errorData');
+      wb = await helper.addDataWb(wb, body.customerData, 'customerData');
+      wb = await helper.addDataWb(wb, body.employeeData, 'employeeData');
       res.send(wb);
     }).catch((err) => {
       console.log(err);

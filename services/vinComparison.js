@@ -5,7 +5,11 @@ const comparison = {
     try {
       let database = await crud.loadAllVehicles();
       var value = [];
-      var data = [];
+      var data = {
+        customerData: [],
+        employeeData: [],
+        errorData: []
+      }
       await input.forEach(async (vehicle, index) => {
         value[index] = await database.filter((forCompare) => {
           return forCompare.year + ':' + forCompare.make === vehicle.ModelYear + ':' + vehicle.Make;
@@ -27,6 +31,47 @@ const comparison = {
             harnessTypeTwo: 'Not Found'
           });
         }
+        // TODO: create a sheet for each situation error, employee, and customer data
+
+        if(value[index].ErrorCode !== '0 - VIN decoded clean. Check Digit (9th position) is correct'){
+          data.errorData[index] = {
+            VIN: value[index].VIN,
+            make: value[index].Make,
+            year: value[index].ModelYear,
+            engineManufacturer: value[index].EngineManufacturer,
+            engineModel: value[index].EngineModel,
+            kitNumber: value[index].kitPartNumber,
+            suggestedVIN: value[index].SuggestedVIN,
+            errorCode: value[index].ErrorCode
+          }
+        }else{
+          data.employeeData[index] = {
+            success: value[index].success,
+            VIN: value[index].VIN,
+            engineManufacturer: value[index].EngineManufacturer,
+            engineModel: value[index].EngineModel,
+            make: value[index].Make,
+            year: value[index].ModelYear,
+            model: value[index].Model,
+            vehicleType: value[index].VehicleType,
+            plantLocation: value[index].PlantCountry,
+            kitNumber: value[index].kitPartNumber,
+            harnessTypeOne: value[index].harnessTypeOne,
+            harnessTypeTwo: value[index].harnessTypeTwo,
+          }
+          data.customerData[index] = {
+            VIN: value[index].VIN,
+            make: value[index].Make,
+            year: value[index].ModelYear,
+            model: value[index].Model,
+            success: value[index].success,
+            vehicleType: value[index].VehicleType,
+            kitNumber: value[index].kitPartNumber,
+            harnessTypeOne: value[index].harnessTypeOne,
+            harnessTypeTwo: value[index].harnessTypeTwo,
+          }
+        }
+        /*
         value[index] = {
           VIN: value[index].VIN,
           make: value[index].Make,
@@ -42,9 +87,10 @@ const comparison = {
           vehicleType: value[index].VehicleType,
           suggestedVIN: value[index].SuggestedVIN,
           errorCode: value[index].ErrorCode
-        }
-      });
-      return value;
+        } */
+      });    
+      return(data);
+      //return value;
     } catch (error) {
       console.log(error);
     }
