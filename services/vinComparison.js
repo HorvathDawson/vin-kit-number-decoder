@@ -9,7 +9,7 @@ const comparison = {
         customerData: [],
         employeeData: [],
         errorData: []
-      }
+      };
       await input.forEach(async (vehicle, index) => {
         value[index] = await database.filter((forCompare) => {
           return forCompare.year + ':' + forCompare.make === vehicle.ModelYear + ':' + vehicle.Make;
@@ -34,7 +34,7 @@ const comparison = {
         // TODO: create a sheet for each situation error, employee, and customer data
 
         if(value[index].ErrorCode !== '0 - VIN decoded clean. Check Digit (9th position) is correct'){
-          data.errorData[index] = {
+          data.errorData.push({
             VIN: value[index].VIN,
             make: value[index].Make,
             year: value[index].ModelYear,
@@ -43,9 +43,9 @@ const comparison = {
             kitNumber: value[index].kitPartNumber,
             suggestedVIN: value[index].SuggestedVIN,
             errorCode: value[index].ErrorCode
-          }
+          })
         }else{
-          data.employeeData[index] = {
+          data.employeeData.push({
             success: value[index].success,
             VIN: value[index].VIN,
             engineManufacturer: value[index].EngineManufacturer,
@@ -58,8 +58,8 @@ const comparison = {
             kitNumber: value[index].kitPartNumber,
             harnessTypeOne: value[index].harnessTypeOne,
             harnessTypeTwo: value[index].harnessTypeTwo,
-          }
-          data.customerData[index] = {
+          });
+          data.customerData.push({
             VIN: value[index].VIN,
             make: value[index].Make,
             year: value[index].ModelYear,
@@ -69,7 +69,7 @@ const comparison = {
             kitNumber: value[index].kitPartNumber,
             harnessTypeOne: value[index].harnessTypeOne,
             harnessTypeTwo: value[index].harnessTypeTwo,
-          }
+          });
         }
         /*
         value[index] = {
@@ -88,7 +88,7 @@ const comparison = {
           suggestedVIN: value[index].SuggestedVIN,
           errorCode: value[index].ErrorCode
         } */
-      });    
+      });
       return(data);
       //return value;
     } catch (error) {
