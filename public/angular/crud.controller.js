@@ -7,7 +7,6 @@ angular.module("myApp")
     vm.vehicles;
     vm.selected = {};
     vm.alerts = [];
-
     vm.closeAlert = closeAlert;
     vm.addAlert = addAlert;
     vm.fileUpload = fileUpload;
@@ -15,10 +14,10 @@ angular.module("myApp")
     vm.deleteVehicle = deleteVehicle;
     vm.updateVehicle = updateVehicle;
     vm.insertVehicle = insertVehicle;
+    vm.clearVehicle = clearVehicle;
     vm.checkEdit = checkEdit;
     vm.reset = reset;
     vm.editVehicle = editVehicle;
-
     vm.receiveData();
 
     function closeAlert(index) {
@@ -43,7 +42,7 @@ angular.module("myApp")
           }
         })
         .then(function(data) {
-          XLSX.writeFile(data.data, "sheetjs.xlsx");
+          XLSX.writeFile(data.data, "vinInformation.xlsx");
         }, function(err) {
           console.log("error adding value", err);
         });
@@ -96,7 +95,12 @@ angular.module("myApp")
         console.log("error updating value", err);
       });
     };
-
+    function clearVehicle() {
+        this.insertedHarnessTypeOne = null;
+        this.insertedHarnessTypeTwo = null;
+        this.insertedYear = null;
+        this.insertedMake = null;
+      }
     function insertVehicle() {
       var insertData = {
         harnessTypeOne: this.insertedHarnessTypeOne,

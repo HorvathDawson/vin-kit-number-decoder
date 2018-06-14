@@ -55,6 +55,7 @@
           <div>
             <br>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-danger" ng-click="crud.clearVehicle()">Clear</button>
           </div>
           <br>
           <div uib-alert dismiss-on-timeout="4000"
@@ -92,7 +93,8 @@
             <th>Year</th>
             <th>Make</th>
             <th colspan="2">Harness Types</th>
-            <th>Adapter Type</th>
+            <!--
+            <th>Adapter Type</th> -->
             <th>Edit</th>
           </tr>
         </thead>
@@ -112,9 +114,10 @@
             <td>
               <label ng-bind="vehicle.harnessTypeTwo"></label>
             </td>
+            <!--
             <td>
-              <!-- column for adapter type -->
-            </td>
+               column for adapter type
+            </td> -->
             <td>
               <button type="button" class="btn btn-primary" ng-click="crud.editVehicle(vehicle)">Edit</button>
               <button class="btn btn-danger" uib-popover-template="'deletePopover'">Delete</button>
@@ -133,9 +136,10 @@
             <td>
               <input type="number" ng-model='vehicle.harnessTypeTwo' class="form-control input-sm" />
             </td>
+            <!--
             <td>
-              <!-- column for adapter type --> 
-            </td>
+               column for adapter type
+            </td> -->
             <td>
               <button type="button" class="btn btn-primary" ng-click="crud.updateVehicle(vehicle)">Save</button>
               <button type="button" class="btn btn-danger" ng-click="crud.reset()">Cancel</button>
@@ -156,7 +160,5 @@
     </div>
   </div>
 
-
 </body>
-
 </html>
