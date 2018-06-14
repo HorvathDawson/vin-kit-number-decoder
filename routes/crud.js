@@ -10,7 +10,8 @@ router.post('/insert', async function(req, res, next) {
     var insertedData = {
       year: req.body.year,
       make: req.body.make,
-      harnessType: req.body.harnessType
+      harnessTypeOne: req.body.harnessTypeOne,
+      harnessTypeTwo: req.body.harnessTypeTwo
     }
     await crud.insertVehicle(insertedData)
     res.end();
@@ -23,7 +24,8 @@ router.post('/insert', async function(req, res, next) {
 });
 router.post('/update', async function(req, res, next) {
   var updateData = {
-    harnessType: req.body.harnessType,
+    harnessTypeOne: req.body.harnessTypeOne,
+    harnessTypeTwo: req.body.harnessTypeTwo,
     yearId: req.body.yearId,
     makeId: req.body.makeId
   }

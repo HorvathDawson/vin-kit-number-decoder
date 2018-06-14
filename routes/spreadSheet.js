@@ -6,7 +6,6 @@ var comparison = require('../services/vinComparison.js');
 var helper = require('../services/spreadSheetHelper.js');
 var test = require('../services/vinWebApi.js');
 var multer = require('multer');
-var XLSX = require('xlsx');
 var fs = require('fs');
 
 var upload = multer({
@@ -29,7 +28,6 @@ router.post('/upload', upload.single('file'), async function(req, res, next) {
         data: joinedVinNumbers
       }
     };
-    // TODO: add excel output, and finish database
     rp(options).then((body) => {
       let json = JSON.parse(body);
       return json.Results.map((vinInfo, index) => {
@@ -37,12 +35,9 @@ router.post('/upload', upload.single('file'), async function(req, res, next) {
       })
     }).then((body) => {
       return comparison.compare(body)
-    }).then((body) => {
-      var wb = XLSX.utils.book_new();
-      var ws = XLSX.utils.json_to_sheet(body);
-      XLSX.utils.book_append_sheet(wb, ws, 'VinData');
+    }).then(async (body) => {
+      var wb = await helper.makeWorkBook(body);
       res.send(wb);
-
     }).catch((err) => {
       console.log(err);
     });

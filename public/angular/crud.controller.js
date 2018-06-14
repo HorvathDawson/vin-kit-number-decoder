@@ -2,6 +2,7 @@ angular.module("myApp", ['ui.bootstrap', 'ngFileUpload']);
 
 angular.module("myApp")
   .controller("crudController", function($http) {
+    // TODO: add a clear all in insert
     var vm = this;
     vm.vehicles;
     vm.selected = {};
@@ -43,9 +44,6 @@ angular.module("myApp")
         })
         .then(function(data) {
           XLSX.writeFile(data.data, "sheetjs.xlsx");
-          console.log(data);
-          vm.receiveData();
-
         }, function(err) {
           console.log("error adding value", err);
         });
@@ -79,7 +77,8 @@ angular.module("myApp")
 
     function updateVehicle(vehicle) {
       vm.updateData = {
-        harnessType: vehicle.harnessType,
+        harnessTypeOne: vehicle.harnessTypeOne,
+        harnessTypeTwo: vehicle.harnessTypeTwo,
         yearId: vm.selected.year,
         makeId: vm.selected.make
       }
@@ -99,8 +98,9 @@ angular.module("myApp")
     };
 
     function insertVehicle() {
-      var updateData = {
-        harnessType: this.insertedHarnessType,
+      var insertData = {
+        harnessTypeOne: this.insertedHarnessTypeOne,
+        harnessTypeTwo: this.insertedHarnessTypeTwo,
         year: this.insertedYear,
         make: this.insertedMake
       }
@@ -108,7 +108,7 @@ angular.module("myApp")
         $http({
           method: 'POST',
           url: '/crud/insert',
-          data: updateData,
+          data: insertData,
           headers: {
             'Content-Type': 'application/json; charset=utf-8'
           }

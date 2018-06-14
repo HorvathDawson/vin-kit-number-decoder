@@ -15,14 +15,16 @@ const comparison = {
             success: true
           });
           value[index] = Object.assign(vehicle, {
-            harnessType: value[index].harnessType
+            harnessTypeOne: value[index].harnessTypeOne,
+            harnessTypeTwo: value[index].harnessTypeTwo
           });
         } else {
           vehicle = Object.assign(vehicle, {
             success: false
           });
           value[index] = Object.assign(vehicle, {
-            harnessType: 'Not Found'
+            harnessTypeOne: 'Not Found',
+            harnessTypeTwo: 'Not Found'
           });
         }
         value[index] = {
@@ -33,7 +35,8 @@ const comparison = {
           engineManufacturer: value[index].EngineManufacturer,
           engineModel: value[index].EngineModel,
           kitNumber: value[index].kitPartNumber,
-          harnessType: value[index].harnessType,
+          harnessTypeOne: value[index].harnessTypeOne,
+          harnessTypeTwo: value[index].harnessTypeTwo,
           success: value[index].success,
           plantLocation: value[index].PlantCountry,
           vehicleType: value[index].VehicleType,

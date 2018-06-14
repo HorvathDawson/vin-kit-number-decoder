@@ -1,9 +1,9 @@
 var sqlite = require('sqlite');
 
-var INSERT_DATA = 'INSERT INTO regularVinNumber (year, make, harnessType) VALUES (?, ?, ?)';
+var INSERT_DATA = 'INSERT INTO regularVinNumber (year, make, harnessTypeOne, harnessTypeTwo) VALUES (?, ?, ?, ?)';
 var SELECT_DATA = 'SELECT * FROM regularVinNumber WHERE year = ? AND make = ?';
 var SELECT_ALL_DATA = 'SELECT * FROM regularVinNumber';
-var UPDATE_DATA = 'UPDATE regularVinNumber SET harnessType = ? WHERE year = ? AND make = ?';
+var UPDATE_DATA = 'UPDATE regularVinNumber SET harnessTypeOne = ?, harnessTypeTwo = ? WHERE year = ? AND make = ?';
 var DELETE_DATA = 'DELETE FROM regularVinNumber WHERE year = ? AND make = ?';
 async function openDataBase() {
   try {
@@ -26,7 +26,7 @@ const crud = {
   async insertVehicle(data) {
     try {
       const mainDb = await openDataBase();
-      await mainDb.run(INSERT_DATA, data.year, data.make, data.harnessType);
+      await mainDb.run(INSERT_DATA, data.year, data.make, data.harnessTypeOne, data.harnessTypeTwo);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -42,7 +42,7 @@ const crud = {
   async updateVehicle(data) {
     try {
       const mainDb = await openDataBase();
-      await mainDb.run(UPDATE_DATA, data.harnessType, data.yearId, data.makeId);
+      await mainDb.run(UPDATE_DATA, data.harnessTypeOne, data.harnessTypeTwo, data.yearId, data.makeId);
     } catch (error) {
       return Promise.reject(error);
     }
