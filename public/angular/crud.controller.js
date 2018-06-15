@@ -77,6 +77,7 @@ angular.module("myApp")
       vm.updateData = {
         harnessTypeOne: vehicle.harnessTypeOne,
         harnessTypeTwo: vehicle.harnessTypeTwo,
+        adapterType: vehicle.adapterType,
         yearId: vm.selected.year,
         makeId: vm.selected.make
       }
@@ -99,13 +100,16 @@ angular.module("myApp")
         vm.insertedHarnessTypeTwo = null;
         vm.insertedYear = null;
         vm.insertedMake = null;
+        vm.insertedAdapterType = null;
       }
     function insertVehicle() {
       var insertData = {
         harnessTypeOne: vm.insertedHarnessTypeOne,
         harnessTypeTwo: vm.insertedHarnessTypeTwo,
         year: vm.insertedYear,
-        make: vm.insertedMake
+        make: vm.insertedMake,
+        adapterType: vm.insertedAdapterType,
+        engineType: vm.insertEngineType
       }
       if (vm.insertedMake && vm.insertedYear) {
         $http({

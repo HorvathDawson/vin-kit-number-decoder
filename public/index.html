@@ -29,7 +29,7 @@
         <label>Insert Vehicle</label>
         <form ng-submit="crud.insertVehicle()">
           <div ng-class="{'has-error' : !crud.insertedYear}">
-            <label>year</label>
+            <label>Year</label>
             <input type="number" ng-model="crud.insertedYear" class="form-control input-sm"
              uib-tooltip="must enter something into this field"
              tooltip-placement="top"
@@ -37,7 +37,7 @@
              tooltip-enable="!crud.insertedYear">
           </div>
           <div ng-class="{'has-error' : !crud.insertedMake}">
-            <label>make</label>
+            <label>Make</label>
             <input type="text" ng-model="crud.insertedMake" class="form-control input-sm"
              uib-tooltip="must enter something into this field"
              tooltip-placement="top"
@@ -45,12 +45,16 @@
              tooltip-enable="!crud.insertedMake">
           </div>
           <div>
-            <label>harnessTypeOne</label>
+            <label>Harness Type One</label>
             <input type="number" ng-model="crud.insertedHarnessTypeOne" class="form-control input-sm">
           </div>
           <div>
-            <label>harnessTypeTwo</label>
+            <label>Harness Type Two</label>
             <input type="number" ng-model="crud.insertedHarnessTypeTwo" class="form-control input-sm">
+          </div>
+          <div>
+            <label>Adapter Type</label>
+            <input type="number" ng-model="crud.insertedAdapterType" class="form-control input-sm">
           </div>
           <div>
             <br>
@@ -93,8 +97,7 @@
             <th>Year</th>
             <th>Make</th>
             <th colspan="2">Harness Types</th>
-            <!--
-            <th>Adapter Type</th> -->
+            <th>Adapter Type</th>
             <th>Edit</th>
           </tr>
         </thead>
@@ -114,10 +117,9 @@
             <td>
               <label ng-bind="vehicle.harnessTypeTwo"></label>
             </td>
-            <!--
             <td>
-               column for adapter type
-            </td> -->
+              <label ng-bind="vehicle.adapterType"></label>
+            </td>
             <td>
               <button type="button" class="btn btn-primary" ng-click="crud.editVehicle(vehicle)">Edit</button>
               <button class="btn btn-danger" uib-popover-template="'deletePopover'">Delete</button>
@@ -136,10 +138,9 @@
             <td>
               <input type="number" ng-model='vehicle.harnessTypeTwo' class="form-control input-sm" />
             </td>
-            <!--
             <td>
-               column for adapter type
-            </td> -->
+              <input type="number" ng-model='vehicle.adapterType' class="form-control input-sm" />
+            </td>
             <td>
               <button type="button" class="btn btn-primary" ng-click="crud.updateVehicle(vehicle)">Save</button>
               <button type="button" class="btn btn-danger" ng-click="crud.reset()">Cancel</button>

@@ -11,12 +11,12 @@ router.post('/insert', async function(req, res, next) {
       year: req.body.year,
       make: req.body.make,
       harnessTypeOne: req.body.harnessTypeOne,
-      harnessTypeTwo: req.body.harnessTypeTwo
+      harnessTypeTwo: req.body.harnessTypeTwo,
+      adapterType: req.body.adapterType
     }
     await crud.insertVehicle(insertedData)
     res.end();
   }catch(error){
-    // TODO: make a popup that displays this
     res.send({
       error: error
     })
@@ -26,6 +26,7 @@ router.post('/update', async function(req, res, next) {
   var updateData = {
     harnessTypeOne: req.body.harnessTypeOne,
     harnessTypeTwo: req.body.harnessTypeTwo,
+    adapterType: req.body.adapterType,
     yearId: req.body.yearId,
     makeId: req.body.makeId
   }
