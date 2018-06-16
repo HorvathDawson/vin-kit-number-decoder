@@ -14,8 +14,9 @@ var upload = multer({
 
 router.post('/upload', upload.single('file'), async function(req, res, next) {
   try {
-    var joinedVinNumbers = await helper.joinVinNumbers(req.file.filename);
     var vinData = await helper.readSpreadSheet(req.file.filename);
+    var joinedVinNumbers = vinData.map((data) => data.VIN).join(';');
+
     helper.deleteFile(req.file.filename);
     var options = {
       url: 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValuesBatch/',
@@ -30,10 +31,9 @@ router.post('/upload', upload.single('file'), async function(req, res, next) {
     };
     rp(options).then((body) => {
       let json = JSON.parse(body);
-      return json.Results.map((vinInfo, index) => {
+      body = json.Results.map((vinInfo, index) => {
         return Object.assign(vinInfo, vinData[index]);
-      })
-    }).then((body) => {
+      });
       return comparison.compare(body)
     }).then(async (body) => {
       var wb = await helper.makeWorkBook();

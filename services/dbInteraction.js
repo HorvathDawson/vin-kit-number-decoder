@@ -7,7 +7,7 @@ var UPDATE_DATA = 'UPDATE regularComparison SET harnessTypeOne = ?, harnessTypeT
 var DELETE_DATA = 'DELETE FROM regularComparison WHERE year = ? AND make = ?';
 
 var INSERT_SPECIAL_DATA = 'INSERT INTO specialComparison (year, make, engine, harnessTypeOne, harnessTypeTwo, adapterType) VALUES (?, ?, ?, ?, ?, ?)';
-var SELECT_DATA = 'SELECT * FROM specialComparison WHERE year = ? AND make = ? AND engine = ?';
+var SELECT_SPECIAL_DATA = 'SELECT * FROM specialComparison WHERE year = ? AND make = ? AND engine = ?';
 var SELECT_ALL_SPECIAL_DATA = 'SELECT * FROM specialComparison';
 var UPDATE_SPECIAL_DATA = 'UPDATE specialComparison SET harnessTypeOne = ?, harnessTypeTwo = ?, adapterType = ? WHERE engine = ? AND year = ? AND make = ?';
 var DELETE_SPECIAL_DATA = 'DELETE FROM specialComparison WHERE year = ? AND make = ? AND engine = ? ';
@@ -26,6 +26,14 @@ const crud = {
     try {
       const mainDb = await openDataBase();
       return mainDb.all(SELECT_ALL_DATA);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  async loadAllSpecialVehicles() {
+    try {
+      const specDb = await openDataBase();
+      return specDb.all(SELECT_ALL_SPECIAL_DATA);
     } catch (error) {
       return Promise.reject(error);
     }
