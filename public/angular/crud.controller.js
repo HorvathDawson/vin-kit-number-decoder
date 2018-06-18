@@ -21,11 +21,11 @@ angular.module("myApp")
     vm.receiveData();
     vm.tabs = [{
         title: 'Normal Vehicles',
-        content: '/tabOne.html'
+        content: '/normalTab.html'
       },
       {
         title: 'Special Vehicles',
-        content: '/tabTwo.html'
+        content: '/specialTab.html'
       }
     ];
     function closeAlert(index) {

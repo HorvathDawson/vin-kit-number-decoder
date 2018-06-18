@@ -4,41 +4,39 @@ var crud = require('../services/dbInteraction.js');
 var test = function(data, vehicle, value) {
   try{
     if (vehicle.ErrorCode !== '0 - VIN decoded clean. Check Digit (9th position) is correct') {
-      console.log(data.errorData);
-      console.log('here');
       data.errorData.push({
-        VIN: vehicle.VIN,
-        make: vehicle.Make,
-        year: vehicle.ModelYear,
-        kitNumber: vehicle.kitPartNumber,
-        suggestedVIN: vehicle.SuggestedVIN,
-        errorCode: vehicle.ErrorCode
+        'VIN': vehicle.VIN,
+        'Make': vehicle.Make,
+        'Year': vehicle.ModelYear,
+        'Kit Number': vehicle.kitPartNumber,
+        'Suggested VIN': vehicle.SuggestedVIN,
+        'Error Code': vehicle.ErrorCode
       });
     } else {
       data.employeeData.push({
-        VIN: vehicle.VIN,
-        engineManufacturer: vehicle.EngineManufacturer,
-        engineModel: vehicle.EngineModel,
-        make: vehicle.Make,
-        year: vehicle.ModelYear,
-        model: vehicle.Model,
-        vehicleType: vehicle.VehicleType,
-        plantLocation: vehicle.PlantCountry,
-        kitNumber: vehicle.kitPartNumber,
-        harnessTypeOne: value.harnessTypeOne,
-        harnessTypeTwo: value.harnessTypeTwo,
-        adapterType: value.adapterType
+        'VIN': vehicle.VIN,
+        'Engine Manufacturer': vehicle.EngineManufacturer,
+        'Engine Model': vehicle.EngineModel,
+        'Make': vehicle.Make,
+        'Year': vehicle.ModelYear,
+        'Model': vehicle.Model,
+        'Vehicle Type': vehicle.VehicleType,
+        'Plant Location': vehicle.PlantCountry,
+        'Kit Number': vehicle.kitPartNumber,
+        'Harness Type': value.harnessTypeOne,
+        'Additional Harness Type': value.harnessTypeTwo,
+        'Adapter Type': value.adapterType
       });
       data.customerData.push({
-        VIN: vehicle.VIN,
-        make: vehicle.Make,
-        year: vehicle.ModelYear,
-        model: vehicle.Model,
-        vehicleType: vehicle.VehicleType,
-        kitNumber: vehicle.kitPartNumber,
-        harnessTypeOne: value.harnessTypeOne,
-        harnessTypeTwo: value.harnessTypeTwo,
-        adapterType: value.adapterType
+        'VIN': vehicle.VIN,
+        'Make': vehicle.Make,
+        'Year': vehicle.ModelYear,
+        'Model': vehicle.Model,
+        'Vehicle Type': vehicle.VehicleType,
+        'Kit Number': vehicle.kitPartNumber,
+        'Harness Type': value.harnessTypeOne,
+        'Additional Harness Type': value.harnessTypeTwo,
+        'Adapter Type': value.adapterType
       });
     }
   }catch(err){
