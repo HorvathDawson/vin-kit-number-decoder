@@ -1,0 +1,19 @@
+<div class="column">
+  <form ng-submit="crud.fileUpload()">
+    <label>upload .XLSX spreadsheet</label>
+    <br><br>
+    <label class="btn btn-default btn-file">
+              Upload file
+              <input onchange="$('.upload-file-info').html(this.files[0].name)"
+                     style="display: none;"
+                     type="file"
+                     ngf-select ng-model="crud.spreadsheet"
+                     ngf-pattern="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+                     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                     ngf-max-size="20MB" />
+            </label>
+    <span class='label label-info upload-file-info'></span>
+    <br><br>
+    <button type='sumbit' class="btn btn-primary">Submit</button>
+  </form>
+</div>
