@@ -4,6 +4,7 @@ angular.module("myApp")
   .controller("crudController", function($http) {
     var vm = this;
     vm.vehicles;
+    vm.specialVehicles;
     vm.selected = {};
     vm.alerts = [];
     vm.closeAlert = closeAlert;
@@ -18,7 +19,15 @@ angular.module("myApp")
     vm.reset = reset;
     vm.editVehicle = editVehicle;
     vm.receiveData();
-
+    vm.tabs = [{
+        title: 'Normal Vehicles',
+        content: '/tabOne.html'
+      },
+      {
+        title: 'Special Vehicles',
+        content: '/tabTwo.html'
+      }
+    ];
     function closeAlert(index) {
       vm.alerts.splice(index, 1);
     };
@@ -52,16 +61,21 @@ angular.module("myApp")
         method: 'GET',
         url: '/crud/loadAll'
       }).then(function successCallback(response) {
-        vm.vehicles = response.data;
+        vm.vehicles = response.data.all;
+        vm.specialVehicles = response.data.special;
       }, function errorCallback(error) {
         console.log('error getting data', error);
       });
     };
 
-    function deleteVehicle(vehicle) {
+    function deleteVehicle(vehicle, type) {
+      var url = '/crud/delete';
+      if(type){
+        url = url + type;
+      }
       $http({
         method: 'POST',
-        url: '/crud/delete',
+        url: url,
         data: vehicle,
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -73,17 +87,22 @@ angular.module("myApp")
       });
     };
 
-    function updateVehicle(vehicle) {
+    function updateVehicle(vehicle, type) {
+      var url = '/crud/update';
+      if(type){
+        url = url + type;
+      }
       vm.updateData = {
         harnessTypeOne: vehicle.harnessTypeOne,
         harnessTypeTwo: vehicle.harnessTypeTwo,
         adapterType: vehicle.adapterType,
         yearId: vm.selected.year,
-        makeId: vm.selected.make
+        makeId: vm.selected.make,
+        engineId: vm.selected.engine
       }
       $http({
         method: 'POST',
-        url: '/crud/update',
+        url: url,
         data: vm.updateData,
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -95,13 +114,7 @@ angular.module("myApp")
         console.log("error updating value", err);
       });
     };
-    function clearVehicle() {
-        vm.insertedHarnessTypeOne = null;
-        vm.insertedHarnessTypeTwo = null;
-        vm.insertedYear = null;
-        vm.insertedMake = null;
-        vm.insertedAdapterType = null;
-      }
+
     function insertVehicle() {
       var insertData = {
         harnessTypeOne: vm.insertedHarnessTypeOne,
@@ -109,38 +122,82 @@ angular.module("myApp")
         year: vm.insertedYear,
         make: vm.insertedMake,
         adapterType: vm.insertedAdapterType,
-        engineType: vm.insertEngineType
+        engine: vm.insertedEngine
       }
-      if (vm.insertedMake && vm.insertedYear) {
-        $http({
-          method: 'POST',
-          url: '/crud/insert',
-          data: insertData,
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-          }
-        }).then(function(data) {
-          if (JSON.stringify(data.data.error) == JSON.stringify({
-              errno: 19,
-              code: "SQLITE_CONSTRAINT"
-            })) {
-            vm.addAlert('vehicle make and year is already in database', 'danger')
-          } else {
-            vm.addAlert('you have successfully added a vehicle', 'success')
-          }
-          vm.receiveData();
-        }, function(err) {
-          console.log("error adding value", err);
-        });
+      if (vm.tabIndex) {
+        if (vm.insertedEngine && vm.insertedYear && vm.insertedMake) {
+          console.log('special');
+          $http({
+            method: 'POST',
+            url: '/crud/insert/special',
+            data: insertData,
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            }
+          }).then(function(data) {
+            if (JSON.stringify(data.data.error) == JSON.stringify({
+                errno: 19,
+                code: "SQLITE_CONSTRAINT"
+              })) {
+              vm.addAlert('vehicle is already in database', 'danger')
+            } else {
+              vm.addAlert('you have successfully added a vehicle', 'success')
+            }
+            vm.receiveData();
+          }, function(err) {
+            console.log("error adding value", err);
+          });
+        } else {
+          vm.addAlert('missing field', 'danger');
+        }
       } else {
-        vm.addAlert('missing field', 'danger');
+        if (vm.insertedYear && vm.insertedMake) {
+          console.log('normal');
+          $http({
+            method: 'POST',
+            url: '/crud/insert',
+            data: insertData,
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            }
+          }).then(function(data) {
+            if (JSON.stringify(data.data.error) == JSON.stringify({
+                errno: 19,
+                code: "SQLITE_CONSTRAINT"
+              })) {
+              vm.addAlert('vehicle is already in database', 'danger')
+            } else {
+              vm.addAlert('you have successfully added a vehicle', 'success')
+            }
+            vm.receiveData();
+          }, function(err) {
+            console.log("error adding value", err);
+          });
+        } else {
+          vm.addAlert('missing field', 'danger');
+        }
       }
     }
 
-    function checkEdit(vehicle) {
-      if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
-        return 'edit';
-      } else return 'display';
+    function clearVehicle() {
+      vm.insertedHarnessTypeOne = null;
+      vm.insertedHarnessTypeTwo = null;
+      vm.insertedYear = null;
+      vm.insertedMake = null;
+      vm.insertedEngine = null;
+      vm.insertedAdapterType = null;
+    }
+
+    function checkEdit(vehicle, type) {
+      if(type == 'special'){
+        if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year && vehicle.engine === vm.selected.engine) {
+          return 'editSpecial';
+        } else return 'displaySpecial';
+      }else{
+        if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
+          return 'edit';
+        } else return 'display';
+      }
     };
 
     function reset() {

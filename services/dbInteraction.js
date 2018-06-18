@@ -30,14 +30,6 @@ const crud = {
       return Promise.reject(error);
     }
   },
-  async loadAllSpecialVehicles() {
-    try {
-      const specDb = await openDataBase();
-      return specDb.all(SELECT_ALL_SPECIAL_DATA);
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  },
   async insertVehicle(data) {
     try {
       const mainDb = await openDataBase();
@@ -49,7 +41,7 @@ const crud = {
   async deleteVehicle(data) {
     try {
       const mainDb = await openDataBase();
-      await mainDb.run(DELETE_DATA, data.year, data.make);
+      await mainDb.run(DELETE_DATA, data.yearId, data.makeId);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -57,7 +49,39 @@ const crud = {
   async updateVehicle(data) {
     try {
       const mainDb = await openDataBase();
-      await mainDb.run(UPDATE_DATA, data.harnessTypeOne, data.harnessTypeTwo, data.adapterType, data.yearId, data.makeId);
+      await mainDb.run(UPDATE_DATA, data.harnessTypeOne, data.harnessTypeTwo, data.adapterType,  data.yearId, data.makeId);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  async loadAllSpecialVehicles() {
+    try {
+      const specDb = await openDataBase();
+      return specDb.all(SELECT_ALL_SPECIAL_DATA);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  async updateSpecialVehicle(data) {
+    try {
+      const specDb = await openDataBase();
+      await specDb.run(UPDATE_SPECIAL_DATA, data.harnessTypeOne, data.harnessTypeTwo, data.adapterType, data.engineId, data.yearId, data.makeId);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  async insertSpecialVehicle(data) {
+      try {
+        const specDb = await openDataBase();
+        await specDb.run(INSERT_SPECIAL_DATA, data.year, data.make, data.engine, data.harnessTypeOne, data.harnessTypeTwo, data.adapterType);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+  },
+  async deleteSpecialVehicle(data) {
+    try {
+      const specDb = await openDataBase();
+      await specDb.run(DELETE_SPECIAL_DATA, data.yearId, data.makeId, data.engineId);
     } catch (error) {
       return Promise.reject(error);
     }
