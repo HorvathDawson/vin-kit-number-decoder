@@ -12,15 +12,18 @@ var SELECT_ALL_SPECIAL_DATA = 'SELECT * FROM specialComparison';
 var UPDATE_SPECIAL_DATA = 'UPDATE specialComparison SET harnessTypeOne = ?, harnessTypeTwo = ?, adapterType = ? WHERE engine = ? AND year = ? AND make = ?';
 var DELETE_SPECIAL_DATA = 'DELETE FROM specialComparison WHERE year = ? AND make = ? AND engine = ? ';
 
+/* Opens database for access */
 async function openDataBase() {
   try {
-    return await sqlite.open('./db/mainVinDb.db', {
+    return await sqlite.open('./db/vinDb.db', {
       Promise
     })
   } catch (error) {
     return Promise.reject(error);
   }
 }
+
+/* all database interactions */
 const crud = {
   async loadAllVehicles() {
     try {
@@ -54,6 +57,8 @@ const crud = {
       return Promise.reject(error);
     }
   },
+
+  /* special table interaction */
   async loadAllSpecialVehicles() {
     try {
       const specDb = await openDataBase();

@@ -9,6 +9,9 @@ router.get('/loadAll', async function(req, res, next) {
   };
   res.send(data);
 });
+
+/*main table crud routing */
+
 router.post('/insert', async function(req, res, next) {
   try{
     var insertedData = {
@@ -45,6 +48,9 @@ router.post('/delete', async function(req, res, next) {
   await crud.deleteVehicle(deleteData);
   res.end();
 });
+
+/* special table crud routing */
+
 router.post('/insert/special', async function(req, res, next) {
   try{
     var insertedData = {

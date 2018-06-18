@@ -126,7 +126,6 @@ angular.module("myApp")
       }
       if (vm.tabIndex) {
         if (vm.insertedEngine && vm.insertedYear && vm.insertedMake) {
-          console.log('special');
           $http({
             method: 'POST',
             url: '/crud/insert/special',
@@ -152,7 +151,6 @@ angular.module("myApp")
         }
       } else {
         if (vm.insertedYear && vm.insertedMake) {
-          console.log('normal');
           $http({
             method: 'POST',
             url: '/crud/insert',

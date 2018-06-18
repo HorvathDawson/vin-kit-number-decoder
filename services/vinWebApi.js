@@ -1,8 +1,8 @@
+/* POST communication with online vin API decoder */
+
 var path = require('path');
 var request = require('request');
 var comparison = require('../services/vinComparison.js');
-
-
 
 const test = {
   async getInfo(joinedVins, vinData){
