@@ -9,6 +9,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
 <script src="./angular/crud.controller.js"></script>
+<script src="./angular/main.controller.js"></script>
 <script src='/script/bootstrap/ui-bootstrap-tpls.js'></script>
 <script src="/script/file-upload/ng-file-upload.min.js"></script>
 <script src="/script/file-upload/ng-file-upload-shim.min.js"></script>
@@ -23,9 +24,9 @@
 </head>
 
 <body>
-  <div ng-controller="crudController as crud">
-    <uib-tabset active="crud.tabIndex">
-      <uib-tab index="$index" ng-repeat="tab in crud.tabs" heading="{{tab.title}}">
+  <div ng-controller="mainController as main">
+    <uib-tabset active="main.tabIndex">
+      <uib-tab index="$index" ng-repeat="tab in main.tabs" heading="{{tab.title}}">
         <div ng-include="tab.content"></div>
       </uib-tab>
     </uib-tabset>
