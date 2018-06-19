@@ -1,4 +1,3 @@
-
 <div ng-controller="specialCrudController as crud">
   <div class="column">
     <label>Insert Vehicle</label>
@@ -37,81 +36,81 @@
     </form>
   </div>
   <div ng-include="'uploadFile.html'"></div>
-</div>
 
-<div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Year</th>
-        <th>Make</th>
-        <th>Engine</th>
-        <th colspan="2">Harness Types</th>
-        <th>Adapter Type</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="vehicle in crud.vehicles" ng-include="crud.checkEdit(vehicle)">
-      </tr>
-      <script type="text/ng-template" id="displaySpecial">
-        <td>
-          <label ng-bind="vehicle.year"></label>
-        </td>
-        <td>
-          <label ng-bind="vehicle.make"></label>
-        </td>
-        <td>
-          <label ng-bind="vehicle.engine"></label>
-        </td>
-        <td>
-          <label ng-bind="vehicle.harnessTypeOne"></label>
-        </td>
-        <td>
-          <label ng-bind="vehicle.harnessTypeTwo"></label>
-        </td>
-        <td>
-          <label ng-bind="vehicle.adapterType"></label>
-        </td>
-        <td>
-          <button type="button" class="btn btn-primary" ng-click="crud.editVehicle(vehicle)">Edit</button>
-          <button class="btn btn-danger" uib-popover-template="'deletePopoverSpecial'">Delete</button>
-        </td>
-      </script>
-      <script type="text/ng-template" id="editSpecial">
-        <td>
-          <label ng-bind="vehicle.year"></label>
-        </td>
-        <td>
-          <label ng-bind="vehicle.make"></label>
-        </td>
-        <td>
-          <label ng-bind="vehicle.engine"></label>
-        </td>
-        <td>
-          <input type="number" ng-model='vehicle.harnessTypeOne' class="form-control input-sm" />
-        </td>
-        <td>
-          <input type="number" ng-model='vehicle.harnessTypeTwo' class="form-control input-sm" />
-        </td>
-        <td>
-          <input type="number" ng-model='vehicle.adapterType' class="form-control input-sm" />
-        </td>
-        <td>
-          <button type="button" class="btn btn-primary" ng-click="crud.updateVehicle(vehicle, '/special')">Save</button>
-          <button type="button" class="btn btn-danger" ng-click="crud.reset()">Cancel</button>
-        </td>
-      </script>
-      <script type="text/ng-template" id="deletePopoverSpecial">
-        <div>
-          <div class="popover-arrow"></div>
-          <h3 class="popover-title">Are you sure?</h3>
-          <div class="popover-content">
-            <button class="btn btn-danger" ng-click="crud.deleteVehicle(vehicle, '/special')">Confirm</button>
-            <button class="btn btn-primary" ng-click="crud.reset()">Stooopp!</button>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Make</th>
+          <th>Engine</th>
+          <th colspan="2">Harness Types</th>
+          <th>Adapter Type</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="vehicle in crud.vehicles" ng-include="crud.checkEdit(vehicle)">
+        </tr>
+        <script type="text/ng-template" id="displaySpecial">
+          <td>
+            <label ng-bind="vehicle.year"></label>
+          </td>
+          <td>
+            <label ng-bind="vehicle.make"></label>
+          </td>
+          <td>
+            <label ng-bind="vehicle.engine"></label>
+          </td>
+          <td>
+            <label ng-bind="vehicle.harnessTypeOne"></label>
+          </td>
+          <td>
+            <label ng-bind="vehicle.harnessTypeTwo"></label>
+          </td>
+          <td>
+            <label ng-bind="vehicle.adapterType"></label>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" ng-click="crud.editVehicle(vehicle)">Edit</button>
+            <button class="btn btn-danger" uib-popover-template="'deletePopoverSpecial'">Delete</button>
+          </td>
+        </script>
+        <script type="text/ng-template" id="editSpecial">
+          <td>
+            <label ng-bind="vehicle.year"></label>
+          </td>
+          <td>
+            <label ng-bind="vehicle.make"></label>
+          </td>
+          <td>
+            <label ng-bind="vehicle.engine"></label>
+          </td>
+          <td>
+            <input type="number" ng-model='vehicle.harnessTypeOne' class="form-control input-sm" />
+          </td>
+          <td>
+            <input type="number" ng-model='vehicle.harnessTypeTwo' class="form-control input-sm" />
+          </td>
+          <td>
+            <input type="number" ng-model='vehicle.adapterType' class="form-control input-sm" />
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" ng-click="crud.updateVehicle(vehicle, '/special')">Save</button>
+            <button type="button" class="btn btn-danger" ng-click="crud.reset()">Cancel</button>
+          </td>
+        </script>
+        <script type="text/ng-template" id="deletePopoverSpecial">
+          <div>
+            <div class="popover-arrow"></div>
+            <h3 class="popover-title">Are you sure?</h3>
+            <div class="popover-content">
+              <button class="btn btn-danger" ng-click="crud.deleteVehicle(vehicle, '/special')">Confirm</button>
+              <button class="btn btn-primary" ng-click="crud.reset()">Stooopp!</button>
+            </div>
           </div>
-        </div>
-      </script>
-    </tbody>
-  </table>
+        </script>
+      </tbody>
+    </table>
+  </div>
 </div>

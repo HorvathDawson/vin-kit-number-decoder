@@ -4,6 +4,7 @@ angular.module("myApp")
       this.deleteVehicle = deleteVehicle;
       this.updateVehicle = updateVehicle;
       this.insertVehicle = insertVehicle;
+      this.insertSpecialVehicle = insertSpecialVehicle;
 
       function receiveData() {
         return $http({
@@ -27,7 +28,7 @@ angular.module("myApp")
         })
       };
 
-      function updateVehicle(selectedData, vehicle, type) {
+      function updateVehicle(selected, vehicle, type) {
         var url = '/crud/update';
         if (type) {
           url = url + type;
@@ -36,9 +37,9 @@ angular.module("myApp")
           harnessTypeOne: vehicle.harnessTypeOne,
           harnessTypeTwo: vehicle.harnessTypeTwo,
           adapterType: vehicle.adapterType,
-          yearId: selectedData.selected.year,
-          makeId: selectedData.selected.make,
-          engineId: selectedData.selected.engine
+          yearId: selected.year,
+          makeId: selected.make,
+          engineId: selected.engine
         }
         return $http({
           method: 'POST',

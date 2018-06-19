@@ -92,9 +92,9 @@ angular.module("myApp")
 
     function checkEdit(vehicle, type) {
       if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
-        return 'edit';
+        return 'edit'
       } else{
-        return 'display';
+        return 'display'
       }
     };
 
