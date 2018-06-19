@@ -2,12 +2,10 @@ angular.module("myApp")
   .controller("specialCrudController", function(vinDataInteraction) {
     var vm = this;
     vm.vehicles;
-    vm.specialVehicles;
     vm.selected = {};
     vm.alerts = [];
     vm.closeAlert = closeAlert;
     vm.addAlert = addAlert;
-    vm.fileUpload = fileUpload;
     vm.receiveData = receiveData;
     vm.deleteVehicle = deleteVehicle;
     vm.updateVehicle = updateVehicle;
@@ -30,7 +28,7 @@ angular.module("myApp")
     };
 
     function receiveData() {
-      vinDataInteraction.receiveData.then(function successCallback(response) {
+      vinDataInteraction.receiveData().then(function successCallback(response) {
         vm.vehicles = response.data.all;
       }, function errorCallback(error) {
         console.log('error getting data', error);
@@ -91,16 +89,12 @@ angular.module("myApp")
       vm.insertedAdapterType = null;
     }
 
-    function checkEdit(vehicle, type) {
-      if (type == 'special') {
+    function checkEdit(vehicle) {
         if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year && vehicle.engine === vm.selected.engine) {
           return 'editSpecial';
-        } else return 'displaySpecial';
-      } else {
-        if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
-          return 'edit';
-        } else return 'display';
-      }
+        } else {
+          return 'displaySpecial';
+        }
     };
 
     function reset() {

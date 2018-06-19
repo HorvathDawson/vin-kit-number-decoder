@@ -4,7 +4,6 @@ angular.module("myApp")
       this.deleteVehicle = deleteVehicle;
       this.updateVehicle = updateVehicle;
       this.insertVehicle = insertVehicle;
-      this.clearVehicle = clearVehicle;
 
       function receiveData() {
         return $http({
@@ -72,5 +71,4 @@ angular.module("myApp")
           }
         })
       }
-
-  });
+  })

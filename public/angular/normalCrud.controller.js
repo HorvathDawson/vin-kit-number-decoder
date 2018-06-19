@@ -29,7 +29,7 @@ angular.module("myApp")
     };
 
     function receiveData() {
-      vinDataInteraction.receiveData.then(function successCallback(response) {
+      vinDataInteraction.receiveData().then(function successCallback(response) {
         vm.vehicles = response.data.all;
       }, function errorCallback(error) {
         console.log('error getting data', error);
@@ -91,14 +91,10 @@ angular.module("myApp")
     }
 
     function checkEdit(vehicle, type) {
-      if(type == 'special'){
-        if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year && vehicle.engine === vm.selected.engine) {
-          return 'editSpecial';
-        } else return 'displaySpecial';
-      }else{
-        if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
-          return 'edit';
-        } else return 'display';
+      if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
+        return 'edit';
+      } else{
+        return 'display';
       }
     };
 

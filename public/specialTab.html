@@ -1,5 +1,4 @@
-<script src="./angular/vinData.service.js"></script>
-<script src="./angular/specialcrud.controller.js"></script>
+
 <div ng-controller="specialCrudController as crud">
   <div class="column">
     <label>Insert Vehicle</label>
@@ -53,7 +52,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="vehicle in crud.specialVehicles" ng-include="crud.checkEdit(vehicle, 'special')">
+      <tr ng-repeat="vehicle in crud.vehicles" ng-include="crud.checkEdit(vehicle)">
       </tr>
       <script type="text/ng-template" id="displaySpecial">
         <td>

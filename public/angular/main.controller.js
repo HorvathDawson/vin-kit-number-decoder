@@ -1,7 +1,8 @@
-angular.module("myApp", ['ui.bootstrap', 'ngFileUpload', 'vinDataInteraction']);
+angular.module("myApp", ['ui.bootstrap', 'ngFileUpload']);
 
 angular.module("myApp")
   .controller("mainController", function() {
+    var vm = this;
     vm.tabs = [{
         title: 'Normal Vehicles',
         content: '/normalTab.html'
