@@ -1,6 +1,9 @@
 
 angular.module("myApp")
   .controller("fileUpload", function($http) {
+    var vm = this;
+    vm.fileUpload = fileUpload;
+    
     function fileUpload() {
       var file = vm.spreadsheet;
       var payload = new FormData();

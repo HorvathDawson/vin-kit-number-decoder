@@ -1,7 +1,7 @@
 
 
-<div class="column" ng-controller="fileUpload">
-  <form ng-submit="fileUpload()">
+<div class="column" ng-controller="fileUpload as file">
+  <form ng-submit="file.fileUpload()">
     <label>upload .XLSX spreadsheet</label>
     <br><br>
     <label class="btn btn-default btn-file">
@@ -9,7 +9,7 @@
               <input onchange="$('.upload-file-info').html(this.files[0].name)"
                      style="display: none;"
                      type="file"
-                     ngf-select ng-model="spreadsheet"
+                     ngf-select ng-model="file.spreadsheet"
                      ngf-pattern="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
                      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                      ngf-max-size="20MB" />

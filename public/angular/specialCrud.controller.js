@@ -29,7 +29,8 @@ angular.module("myApp")
 
     function receiveData() {
       vinDataInteraction.receiveData().then(function successCallback(response) {
-        vm.vehicles = response.data.all;
+        vm.vehicles = response.data.special;
+        console.log(vm.vehicles);
       }, function errorCallback(error) {
         console.log('error getting data', error);
       });
