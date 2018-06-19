@@ -1,4 +1,4 @@
-angular.module("myApp", ['ui.bootstrap', 'ngFileUpload', 'fileUpload', 'vinDataInteraction']);
+angular.module("myApp", ['ui.bootstrap', 'ngFileUpload', 'vinDataInteraction']);
 
 angular.module("myApp")
   .controller("mainController", function() {

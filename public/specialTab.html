@@ -1,4 +1,6 @@
-<div>
+<script src="./angular/vinData.service.js"></script>
+<script src="./angular/specialcrud.controller.js"></script>
+<div ng-controller="specialCrudController as crud">
   <div class="column">
     <label>Insert Vehicle</label>
     <form ng-submit="crud.insertVehicle()">
@@ -15,12 +17,12 @@
         <input type="text" ng-model="crud.insertedEngine" class="form-control input-sm" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedEngine">
       </div>
       <div>
-        <label>Harness Type One</label>
-        <input type="number" ng-model="crud.insertedHarnessTypeOne" class="form-control input-sm">
+        <label>Harness Type</label>
+        <input type="text" ng-model="crud.insertedHarnessTypeOne" class="form-control input-sm">
       </div>
       <div>
-        <label>Harness Type Two</label>
-        <input type="number" ng-model="crud.insertedHarnessTypeTwo" class="form-control input-sm">
+        <label>Additional Harness Type or Note</label>
+        <input type="text" ng-model="crud.insertedHarnessTypeTwo" class="form-control input-sm">
       </div>
       <div>
         <label>Adapter Type</label>

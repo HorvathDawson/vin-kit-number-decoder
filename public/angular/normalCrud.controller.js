@@ -1,6 +1,6 @@
 
 angular.module("myApp")
-  .controller("normalCrudController", function($http) {
+  .controller("normalCrudController", function(vinDataInteraction) {
     var vm = this;
     vm.vehicles;
     vm.selected = {};
@@ -27,6 +27,7 @@ angular.module("myApp")
         type: type
       });
     };
+
     function receiveData() {
       vinDataInteraction.receiveData.then(function successCallback(response) {
         vm.vehicles = response.data.all;

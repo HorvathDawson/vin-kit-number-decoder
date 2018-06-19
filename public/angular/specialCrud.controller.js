@@ -1,6 +1,5 @@
-
 angular.module("myApp")
-  .controller("specialCrudController", function($http) {
+  .controller("specialCrudController", function(vinDataInteraction) {
     var vm = this;
     vm.vehicles;
     vm.specialVehicles;
@@ -18,7 +17,7 @@ angular.module("myApp")
     vm.reset = reset;
     vm.editVehicle = editVehicle;
     vm.receiveData();
-    
+
     function closeAlert(index) {
       vm.alerts.splice(index, 1);
     };
@@ -55,7 +54,6 @@ angular.module("myApp")
       });
     };
 
-
     function insertVehicle() {
       var insertData = {
         harnessTypeOne: vm.insertedHarnessTypeOne,
@@ -65,23 +63,23 @@ angular.module("myApp")
         adapterType: vm.insertedAdapterType,
         engine: vm.insertedEngine
       }
-        if (vm.insertedYear && vm.insertedMake && vm.insertedEngine) {
-          vinDataInteraction.insertSpecialVehicle(insertData).then(function(data) {
-            if (JSON.stringify(data.data.error) == JSON.stringify({
-                errno: 19,
-                code: "SQLITE_CONSTRAINT"
-              })) {
-              vm.addAlert('vehicle is already in database', 'danger')
-            } else {
-              vm.addAlert('you have successfully added a vehicle', 'success')
-            }
-            vm.receiveData();
-          }, function(err) {
-            console.log("error adding value", err);
-          });
-        } else {
-          vm.addAlert('missing field', 'danger');
-        }
+      if (vm.insertedYear && vm.insertedMake && vm.insertedEngine) {
+        vinDataInteraction.insertSpecialVehicle(insertData).then(function(data) {
+          if (JSON.stringify(data.data.error) == JSON.stringify({
+              errno: 19,
+              code: "SQLITE_CONSTRAINT"
+            })) {
+            vm.addAlert('vehicle is already in database', 'danger')
+          } else {
+            vm.addAlert('you have successfully added a vehicle', 'success')
+          }
+          vm.receiveData();
+        }, function(err) {
+          console.log("error adding value", err);
+        });
+      } else {
+        vm.addAlert('missing field', 'danger');
+      }
     }
 
     function clearVehicle() {
@@ -94,11 +92,11 @@ angular.module("myApp")
     }
 
     function checkEdit(vehicle, type) {
-      if(type == 'special'){
+      if (type == 'special') {
         if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year && vehicle.engine === vm.selected.engine) {
           return 'editSpecial';
         } else return 'displaySpecial';
-      }else{
+      } else {
         if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year) {
           return 'edit';
         } else return 'display';

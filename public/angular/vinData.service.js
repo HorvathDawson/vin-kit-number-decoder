@@ -1,10 +1,10 @@
 angular.module("myApp")
   .service("vinDataInteraction", function($http) {
-      var receiveData;
-      var deleteVehicle;
-      var updateVehicle;
-      var insertVehicle;
-      var clearVehicle;
+      this.receiveData = receiveData;
+      this.deleteVehicle = deleteVehicle;
+      this.updateVehicle = updateVehicle;
+      this.insertVehicle = insertVehicle;
+      this.clearVehicle = clearVehicle;
 
       function receiveData() {
         return $http({
@@ -72,5 +72,5 @@ angular.module("myApp")
           }
         })
       }
-    }
+
   });
