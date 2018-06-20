@@ -1,0 +1,31 @@
+<div >
+  <div class="column">
+    <label>Insert Harness</label>
+    <form>
+      <div>
+        <label>Reference String</label>
+        <input type="text" ng-model="crud.referenceString" class="form-control input-sm">
+      </div>
+      <div>
+        <label>Top Level</label>
+        <input type="text" ng-model="crud.topLevel" class="form-control input-sm">
+      </div>
+      <div>
+        <label>Main Harness</label>
+        <input type="text" ng-model="crud.mainHarness" class="form-control input-sm">
+      </div>
+      <div>
+        <label>Adapter Harness</label>
+        <input type="text" ng-model="crud.adapterHarness" class="form-control input-sm">
+      </div>
+
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-danger" ng-click="crud.clearHarness()">Clear</button>
+      </div>
+      <br>
+    </form>
+  </div>
+  <file-upload></file-upload>
+</div>
