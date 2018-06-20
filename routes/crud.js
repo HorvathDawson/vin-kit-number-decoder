@@ -3,9 +3,17 @@ var router = express.Router();
 var crud = require('../services/dbInteraction.js');
 
 router.get('/loadAll', async function(req, res, next) {
+  var all = await crud.loadAllVehicles();
+  var special = await crud.loadAllSpecialVehicles();
+  all.forEach((vehicle) => {
+    vehicle.key = (vehicle.year + ':' + vehicle.make).replace(/\s/g, '')
+  });
+  special.forEach((vehicle) => {
+    vehicle.key = (vehicle.year + ':' + vehicle.make + ':' + vehicle.engine).replace(/\s/g, '')
+  });
   var data = {
-    all: await crud.loadAllVehicles(),
-    special: await crud.loadAllSpecialVehicles()
+    all: all,
+    special: special
   };
   res.send(data);
 });

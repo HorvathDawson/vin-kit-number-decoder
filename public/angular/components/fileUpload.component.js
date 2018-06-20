@@ -1,11 +1,11 @@
 angular.module('myApp')
 .component('fileUpload', {
-  templateUrl: '../uploadFile.html',
+  templateUrl: '../../uploadFile.html',
   controller: fileUpload,
   controllerAs: 'file'
 });
 
-function fileUpload() {
+function fileUpload($http) {
   var vm = this;
   vm.fileUpload = fileUpload;
 
