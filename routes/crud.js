@@ -2,20 +2,19 @@ var express = require('express');
 var router = express.Router();
 var crud = require('../services/dbInteraction.js');
 
-router.get('/loadAll', async function(req, res, next) {
+router.get('/loadAllNormal', async function(req, res, next) {
   var all = await crud.loadAllVehicles();
-  var special = await crud.loadAllSpecialVehicles();
   all.forEach((vehicle) => {
     vehicle.key = (vehicle.year + ':' + vehicle.make).replace(/\s/g, '')
   });
+  res.send(all);
+});
+router.get('/loadAllSpecial', async function(req, res, next) {
+  var special = await crud.loadAllSpecialVehicles();
   special.forEach((vehicle) => {
     vehicle.key = (vehicle.year + ':' + vehicle.make + ':' + vehicle.engine).replace(/\s/g, '')
   });
-  var data = {
-    all: all,
-    special: special
-  };
-  res.send(data);
+  res.send(special);
 });
 
 /*main table crud routing */

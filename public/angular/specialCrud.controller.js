@@ -2,7 +2,6 @@ angular.module("myApp")
   .controller("specialCrudController", function(vinDataInteraction) {
     var vm = this;
     vm.vehicles;
-    vm.selected = {};
     vm.alerts = [];
     vm.closeAlert = closeAlert;
     vm.addAlert = addAlert;
@@ -11,7 +10,6 @@ angular.module("myApp")
     vm.updateVehicle = updateVehicle;
     vm.insertVehicle = insertVehicle;
     vm.clearVehicle = clearVehicle;
-    vm.checkEdit = checkEdit;
     vm.reset = reset;
     vm.editVehicle = editVehicle;
     vm.receiveData();
@@ -28,8 +26,8 @@ angular.module("myApp")
     };
 
     function receiveData() {
-      vinDataInteraction.receiveData().then(function successCallback(response) {
-        vm.vehicles = response.data.special;
+      vinDataInteraction.receiveSpecialData().then(function successCallback(response) {
+        vm.vehicles = response.data;
       }, function errorCallback(error) {
         console.log('error getting data', error);
       });
@@ -44,8 +42,8 @@ angular.module("myApp")
     };
 
     function updateVehicle(vehicle, type) {
-      vinDataInteraction.updateVehicle(vm.selected, vehicle, type).then(function() {
-        vm.selected = {};
+      vinDataInteraction.updateVehicle(vehicle, type).then(function() {
+        vehicle.edit = null;
         vm.receiveData();
       }, function(err) {
         console.log("error updating value", err);
@@ -89,20 +87,13 @@ angular.module("myApp")
       vm.insertedAdapterType = null;
     }
 
-    function checkEdit(vehicle) {
-        if (vehicle.make === vm.selected.make && vehicle.year === vm.selected.year && vehicle.engine === vm.selected.engine) {
-          return 'editSpecial';
-        } else {
-          return 'displaySpecial';
-        }
-    };
-
-    function reset() {
-      vm.selected = {};
+    function reset(vehicle) {
       vm.receiveData();
+      vehicle.edit = null;
+      vehicle.popover = false;
     };
 
     function editVehicle(vehicle) {
-      vm.selected = angular.copy(vehicle);
+      vehicle.edit = true;
     };
   });

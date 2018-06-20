@@ -50,7 +50,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="vehicle in crud.vehicles track by vehicle.key" ng-include="crud.checkEdit(vehicle)">
+        <tr ng-repeat-start="vehicle in crud.vehicles track by vehicle.key" ng-if="!vehicle.edit" ng-include="'displaySpecial'">
+        </tr>
+        <tr ng-repeat-end ng-if="vehicle.edit" ng-include="'editSpecial'">
         </tr>
         <script type="text/ng-template" id="displaySpecial">
           <td>
@@ -73,7 +75,7 @@
           </td>
           <td>
             <button type="button" class="btn btn-primary" ng-click="crud.editVehicle(vehicle)">Edit</button>
-            <button class="btn btn-danger" uib-popover-template="'deletePopoverSpecial'">Delete</button>
+            <button class="btn btn-danger" popover-is-open="vehicle.popover" uib-popover-template="'deletePopoverSpecial'">Delete</button>
           </td>
         </script>
         <script type="text/ng-template" id="editSpecial">
@@ -106,7 +108,7 @@
             <h3 class="popover-title">Are you sure?</h3>
             <div class="popover-content">
               <button class="btn btn-danger" ng-click="crud.deleteVehicle(vehicle, '/special')">Confirm</button>
-              <button class="btn btn-primary" ng-click="crud.reset()">Stooopp!</button>
+              <button class="btn btn-primary" ng-click="crud.reset(vehicle)">Stooopp!</button>
             </div>
           </div>
         </script>

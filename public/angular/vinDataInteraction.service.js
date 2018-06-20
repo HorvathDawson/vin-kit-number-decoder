@@ -1,15 +1,23 @@
 angular.module("myApp")
   .service("vinDataInteraction", function($http) {
-      this.receiveData = receiveData;
+      this.receiveSpecialData = receiveSpecialData;
+      this.receiveNormalData = receiveNormalData;
       this.deleteVehicle = deleteVehicle;
       this.updateVehicle = updateVehicle;
       this.insertVehicle = insertVehicle;
       this.insertSpecialVehicle = insertSpecialVehicle;
 
-      function receiveData() {
+      function receiveNormalData() {
         return $http({
           method: 'GET',
-          url: '/crud/loadAll'
+          url: '/crud/loadAllNormal'
+        })
+      };
+
+      function receiveSpecialData() {
+        return $http({
+          method: 'GET',
+          url: '/crud/loadAllSpecial'
         })
       };
 
@@ -28,7 +36,7 @@ angular.module("myApp")
         })
       };
 
-      function updateVehicle(selected, vehicle, type) {
+      function updateVehicle(vehicle, type) {
         var url = '/crud/update';
         if (type) {
           url = url + type;
@@ -37,9 +45,9 @@ angular.module("myApp")
           harnessTypeOne: vehicle.harnessTypeOne,
           harnessTypeTwo: vehicle.harnessTypeTwo,
           adapterType: vehicle.adapterType,
-          yearId: selected.year,
-          makeId: selected.make,
-          engineId: selected.engine
+          yearId: vehicle.year,
+          makeId: vehicle.make,
+          engineId: vehicle.engine
         }
         return $http({
           method: 'POST',

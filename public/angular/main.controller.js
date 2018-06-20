@@ -10,6 +10,10 @@ angular.module("myApp")
       {
         title: 'Special Vehicles',
         content: '/specialTab.html'
+      },
+      {
+        title: 'Harness Types',
+        content: '/harnessTab.html'
       }
     ];
   });
