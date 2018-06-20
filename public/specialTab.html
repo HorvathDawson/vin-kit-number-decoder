@@ -35,7 +35,7 @@
       <div uib-alert dismiss-on-timeout="4000" ng-repeat="alert in crud.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="crud.closeAlert($index)">{{alert.msg}}</div>
     </form>
   </div>
-  <div ng-include="'uploadFile.html'"></div>
+  <file-upload></file-upload>
 
   <div>
     <table class="table">
