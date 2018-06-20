@@ -19,7 +19,7 @@ router.get('/loadAllSpecial', async function(req, res, next) {
 
 /*main table crud routing */
 
-router.post('/insert', async function(req, res, next) {
+router.post('/insert/normal', async function(req, res, next) {
   try{
     var insertedData = {
       year: req.body.year,
@@ -36,7 +36,7 @@ router.post('/insert', async function(req, res, next) {
     })
   }
 });
-router.post('/update', async function(req, res, next) {
+router.post('/update/normal', async function(req, res, next) {
   var updateData = {
     harnessTypeOne: req.body.harnessTypeOne,
     harnessTypeTwo: req.body.harnessTypeTwo,
@@ -47,7 +47,7 @@ router.post('/update', async function(req, res, next) {
   await crud.updateVehicle(updateData);
   res.end();
 });
-router.post('/delete', async function(req, res, next) {
+router.post('/delete/normal', async function(req, res, next) {
   var deleteData = {
     yearId: req.body.year,
     makeId: req.body.make

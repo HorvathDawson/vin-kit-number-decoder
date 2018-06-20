@@ -1,5 +1,5 @@
 angular.module("myApp")
-  .controller("specialCrudController", function(vinDataInteraction) {
+  .controller("specialCrudController", function(dataInteraction) {
     var vm = this;
     vm.vehicles;
     vm.alerts = [];
@@ -26,7 +26,7 @@ angular.module("myApp")
     };
 
     function receiveData() {
-      vinDataInteraction.receiveSpecialData().then(function successCallback(response) {
+      dataInteraction.receiveSpecialData().then(function successCallback(response) {
         vm.vehicles = response.data;
       }, function errorCallback(error) {
         console.log('error getting data', error);
@@ -34,7 +34,7 @@ angular.module("myApp")
     };
 
     function deleteVehicle(vehicle, type) {
-      vinDataInteraction.deleteVehicle(vehicle, type).then(function() {
+      dataInteraction.deleteVehicle(vehicle, type).then(function() {
         vm.receiveData();
       }, function(err) {
         console.log("error deleting value", err);
@@ -42,7 +42,7 @@ angular.module("myApp")
     };
 
     function updateVehicle(vehicle, type) {
-      vinDataInteraction.updateVehicle(vehicle, type).then(function() {
+      dataInteraction.updateVehicle(vehicle, type).then(function() {
         vehicle.edit = null;
         vm.receiveData();
       }, function(err) {
@@ -60,7 +60,7 @@ angular.module("myApp")
         engine: vm.insertedEngine
       }
       if (vm.insertedYear && vm.insertedMake && vm.insertedEngine) {
-        vinDataInteraction.insertSpecialVehicle(insertData).then(function(data) {
+        dataInteraction.insertSpecialVehicle(insertData).then(function(data) {
           if (JSON.stringify(data.data.error) == JSON.stringify({
               errno: 19,
               code: "SQLITE_CONSTRAINT"

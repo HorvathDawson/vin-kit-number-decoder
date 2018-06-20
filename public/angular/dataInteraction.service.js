@@ -1,5 +1,5 @@
 angular.module("myApp")
-  .service("vinDataInteraction", function($http) {
+  .service("dataInteraction", function($http) {
       this.receiveSpecialData = receiveSpecialData;
       this.receiveNormalData = receiveNormalData;
       this.deleteVehicle = deleteVehicle;
@@ -22,7 +22,7 @@ angular.module("myApp")
       };
 
       function deleteVehicle(vehicle, type) {
-        var url = '/crud/delete';
+        var url = '/crud/delete/normal';
         if (type) {
           url = url + type;
         }
@@ -37,7 +37,7 @@ angular.module("myApp")
       };
 
       function updateVehicle(vehicle, type) {
-        var url = '/crud/update';
+        var url = '/crud/update/normal';
         if (type) {
           url = url + type;
         }
@@ -73,7 +73,7 @@ angular.module("myApp")
       function insertVehicle(insertData) {
         return $http({
           method: 'POST',
-          url: '/crud/insert',
+          url: '/crud/insert/normal',
           data: insertData,
           headers: {
             'Content-Type': 'application/json; charset=utf-8'
