@@ -47,8 +47,8 @@ var test = function(data, vehicle, value) {
 const comparison = {
   async compare(input) {
     try {
-      let mainDatabase = await crud.loadAllVehicles();
-      let specialDatabase = await crud.loadAllSpecialVehicles();
+      let mainDatabase = await crud.loadVehicles();
+      let specialDatabase = await crud.loadSpecialVehicles();
 
       let mainDatabaseIndex = {};
       let specialDatabaseIndex = {};
