@@ -9,9 +9,9 @@ angular.module("myApp")
     vm.deleteVehicle = deleteVehicle;
     vm.updateVehicle = updateVehicle;
     vm.insertVehicle = insertVehicle;
-    vm.clearVehicle = clearVehicle;
+    vm.clearForm = clearForm;
     vm.reset = reset;
-    vm.editVehicle = editVehicle;
+    vm.edit = edit;
     vm.receiveData();
 
     function closeAlert(index) {
@@ -78,7 +78,7 @@ angular.module("myApp")
       }
     }
 
-    function clearVehicle() {
+    function clearForm() {
       vm.insertedHarnessTypeOne = null;
       vm.insertedHarnessTypeTwo = null;
       vm.insertedYear = null;
@@ -93,7 +93,7 @@ angular.module("myApp")
       vehicle.popover = false;
     };
 
-    function editVehicle(vehicle) {
+    function edit(vehicle) {
       vehicle.edit = true;
     };
   });

@@ -29,7 +29,7 @@
       <div>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="reset" class="btn btn-danger" ng-click="crud.clearVehicle()">Clear</button>
+        <button type="reset" class="btn btn-danger" ng-click="crud.clearForm()">Clear</button>
       </div>
       <br>
       <div uib-alert dismiss-on-timeout="4000" ng-repeat="alert in crud.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="crud.closeAlert($index)">{{alert.msg}}</div>
@@ -74,7 +74,7 @@
             <label ng-bind="vehicle.adapterType"></label>
           </td>
           <td>
-            <button type="button" class="btn btn-primary" ng-click="crud.editVehicle(vehicle)">Edit</button>
+            <button type="button" class="btn btn-primary" ng-click="crud.edit(vehicle)">Edit</button>
             <button class="btn btn-danger" popover-is-open="vehicle.popover" uib-popover-template="'deletePopoverSpecial'">Delete</button>
           </td>
         </script>
@@ -92,7 +92,7 @@
             <input type="number" ng-model='vehicle.harnessTypeOne' class="form-control input-sm" />
           </td>
           <td>
-            <input type="number" ng-model='vehicle.harnessTypeTwo' class="form-control input-sm" />
+            <input type="text" ng-model='vehicle.harnessTypeTwo' class="form-control input-sm" />
           </td>
           <td>
             <input type="number" ng-model='vehicle.adapterType' class="form-control input-sm" />

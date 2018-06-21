@@ -14,6 +14,10 @@ angular.module("myApp")
       {
         title: 'Harness Types',
         content: '/harnessTab.html'
+      },
+      {
+        title: 'BOM',
+        content: ''
       }
     ];
   });

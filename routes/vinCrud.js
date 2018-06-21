@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var crud = require('../services/dbInteraction.js');
+var crud = require('../services/vehicleDbInteraction.js');
 
-router.get('/loadAllNormal', async function(req, res, next) {
-  var all = await crud.loadAllVehicles();
+router.get('/loadNormal', async function(req, res, next) {
+  var all = await crud.loadVehicles();
   all.forEach((vehicle) => {
     vehicle.key = (vehicle.year + ':' + vehicle.make).replace(/\s/g, '')
   });
   res.send(all);
 });
-router.get('/loadAllSpecial', async function(req, res, next) {
-  var special = await crud.loadAllSpecialVehicles();
+router.get('/loadSpecial', async function(req, res, next) {
+  var special = await crud.loadSpecialVehicles();
   special.forEach((vehicle) => {
     vehicle.key = (vehicle.year + ':' + vehicle.make + ':' + vehicle.engine).replace(/\s/g, '')
   });
@@ -41,8 +41,8 @@ router.post('/update/normal', async function(req, res, next) {
     harnessTypeOne: req.body.harnessTypeOne,
     harnessTypeTwo: req.body.harnessTypeTwo,
     adapterType: req.body.adapterType,
-    yearId: req.body.yearId,
-    makeId: req.body.makeId
+    yearId: req.body.year,
+    makeId: req.body.make
   }
   await crud.updateVehicle(updateData);
   res.end();
@@ -81,9 +81,9 @@ router.post('/update/special', async function(req, res, next) {
     harnessTypeOne: req.body.harnessTypeOne,
     harnessTypeTwo: req.body.harnessTypeTwo,
     adapterType: req.body.adapterType,
-    yearId: req.body.yearId,
-    makeId: req.body.makeId,
-    engineId: req.body.engineId
+    yearId: req.body.year,
+    makeId: req.body.make,
+    engineId: req.body.engine
   }
   await crud.updateSpecialVehicle(updateData);
   res.end();
@@ -97,5 +97,4 @@ router.post('/delete/special', async function(req, res, next) {
   await crud.deleteSpecialVehicle(deleteData);
   res.end();
 });
-
 module.exports = router;

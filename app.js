@@ -8,7 +8,8 @@ var hbs = require('express-handlebars');
 
 var routes = require('./routes/index');
 var fileRoutes = require('./routes/spreadSheet');
-var crudRoutes = require('./routes/crud');
+var vinCrudRoutes = require('./routes/vinCrud');
+var harnessCrudRoutes = require('./routes/harnessCrud');
 
 var app = express();
 
@@ -30,7 +31,8 @@ app.use('/script/xlsx', express.static(path.join(__dirname, './node_modules/xlsx
 
 app.use('/', routes);
 app.use('/file', fileRoutes);
-app.use('/crud', crudRoutes);
+app.use('/vinCrud', vinCrudRoutes);
+app.use('/harnessCrud', harnessCrudRoutes);
 
 
 // catch 404 and forward to error handler

@@ -1,14 +1,10 @@
-<div >
+<div ng-controller="harnessCrudController as crud">
   <div class="column">
     <label>Insert Harness</label>
-    <form>
+    <form ng-submit="crud.insertHarness()">
       <div>
-        <label>Reference String</label>
-        <input type="text" ng-model="crud.referenceString" class="form-control input-sm">
-      </div>
-      <div>
-        <label>Top Level</label>
-        <input type="text" ng-model="crud.topLevel" class="form-control input-sm">
+        <label>Harness Name</label>
+        <input type="text" ng-model="crud.harnessName" class="form-control input-sm">
       </div>
       <div>
         <label>Main Harness</label>
@@ -22,10 +18,66 @@
       <div>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="reset" class="btn btn-danger" ng-click="crud.clearHarness()">Clear</button>
+        <button type="reset" class="btn btn-danger" ng-click="crud.clearForm()">Clear</button>
       </div>
       <br>
     </form>
   </div>
   <file-upload></file-upload>
+
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Harness Name</th>
+          <th>Main Harness</th>
+          <th>Adapter Harness</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat-start="harness in crud.harnesses track by harness.ROWID" ng-if="!harness.edit" ng-include="'displayHarness'">
+        </tr>
+        <tr ng-repeat-end ng-if="harness.edit" ng-include="'editHarness'">
+        </tr>
+        <script type="text/ng-template" id="displayHarness">
+          <td>
+            <label ng-bind="harness.harnessName"></label>
+          </td>
+          <td>
+            <label ng-bind="harness.mainHarness"></label>
+          </td>
+          <td>
+            <label ng-bind="harness.adapterHarness"></label>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" ng-click="crud.edit(harness)" >Edit</button>
+            <button class="btn btn-danger" popover-is-open="harness.popover" uib-popover-template="'deletePopoverHarness'">Delete</button>
+          </td>
+        </script>
+        <script type="text/ng-template" id="editHarness">
+          <td>
+            <input type="text" ng-model='harness.harnessName' class="form-control input-sm" />
+          </td>
+          <td>
+            <input type="text" ng-model='harness.mainHarness' class="form-control input-sm" />
+          </td>
+          <td>
+            <input type="text" ng-model='harness.adapterHarness' class="form-control input-sm" />
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" ng-click="crud.updateHarness(harness)">Save</button>
+            <button type="button" class="btn btn-danger" ng-click="crud.reset(harness)">Cancel</button>
+          </td>
+        </script>
+        <script type="text/ng-template" id="deletePopoverHarness">
+          <div>
+            <div class="popover-arrow"></div>
+            <h3 class="popover-title">Are you sure?</h3>
+            <div class="popover-content">
+              <button class="btn btn-danger" ng-click="crud.deleteHarness(harness)">Confirm</button>
+              <button class="btn btn-primary" ng-click="crud.reset(harness)">Stooopp!</button>
+            </div>
+          </div>
+        </script>
 </div>

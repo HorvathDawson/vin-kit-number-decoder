@@ -1,4 +1,4 @@
-var crud = require('../services/dbInteraction.js');
+var crud = require('../services/vehicleDbInteraction.js');
 
 
 var test = function(data, vehicle, value) {
