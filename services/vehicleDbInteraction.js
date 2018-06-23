@@ -1,12 +1,12 @@
 var sqlite = require('sqlite');
 
 var INSERT_DATA = 'INSERT INTO vehicleConfiguration (year, make, harnessTypeOne, harnessTypeTwo, adapterType) VALUES (?, ?, ?, ?, ?)';
-var SELECT_ALL_DATA = 'SELECT * FROM vehicleConfiguration';
+var SELECT_ALL_DATA = 'SELECT * FROM vehicleConfiguration ORDER BY make ASC, year ASC;';
 var UPDATE_DATA = 'UPDATE vehicleConfiguration SET harnessTypeOne = ?, harnessTypeTwo = ?, adapterType = ? WHERE year = ? AND make = ?';
 var DELETE_DATA = 'DELETE FROM vehicleConfiguration WHERE year = ? AND make = ?';
 
 var INSERT_SPECIAL_DATA = 'INSERT INTO specialVehicleConfiguration (year, make, engine, harnessTypeOne, harnessTypeTwo, adapterType) VALUES (?, ?, ?, ?, ?, ?)';
-var SELECT_ALL_SPECIAL_DATA = 'SELECT * FROM specialVehicleConfiguration';
+var SELECT_ALL_SPECIAL_DATA = 'SELECT * FROM specialVehicleConfiguration ORDER BY make ASC, year ASC, engine ASC;';
 var UPDATE_SPECIAL_DATA = 'UPDATE specialVehicleConfiguration SET harnessTypeOne = ?, harnessTypeTwo = ?, adapterType = ? WHERE engine = ? AND year = ? AND make = ?';
 var DELETE_SPECIAL_DATA = 'DELETE FROM specialVehicleConfiguration WHERE year = ? AND make = ? AND engine = ? ';
 

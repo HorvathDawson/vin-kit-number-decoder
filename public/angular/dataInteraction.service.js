@@ -10,6 +10,8 @@ angular.module("myApp")
       this.updateHarness = updateHarness;
       this.insertHarness = insertHarness;
       this.deleteHarness = deleteHarness;
+      this.receiveKitNameData = receiveKitNameData;
+      this.receiveKitPartsData = receiveKitPartsData;
 
       function receiveNormalData() {
         return $http({
@@ -29,6 +31,22 @@ angular.module("myApp")
         return $http({
           method: 'GET',
           url: '/harnessCrud/load'
+        })
+      };
+
+      function receiveKitNameData() {
+        return $http({
+          method: 'GET',
+          url: '/kitCrud/loadNames'
+        })
+      };
+      function receiveKitPartsData(kitNumber) {
+        return $http({
+          method: 'POST',
+          data: {
+            kitNumber: kitNumber
+          },
+          url: '/kitCrud/loadKitParts'
         })
       };
 

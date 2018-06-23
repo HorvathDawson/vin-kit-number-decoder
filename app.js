@@ -10,6 +10,7 @@ var routes = require('./routes/index');
 var fileRoutes = require('./routes/spreadSheet');
 var vinCrudRoutes = require('./routes/vinCrud');
 var harnessCrudRoutes = require('./routes/harnessCrud');
+var kitCrudRoutes = require('./routes/kitCrud');
 
 var app = express();
 
@@ -18,8 +19,7 @@ app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __di
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,6 +33,7 @@ app.use('/', routes);
 app.use('/file', fileRoutes);
 app.use('/vinCrud', vinCrudRoutes);
 app.use('/harnessCrud', harnessCrudRoutes);
+app.use('/kitCrud', kitCrudRoutes);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,36 @@
+<div ng-controller="kitCrudController as crud">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th><button type="button" class="btn btn-primary" ng-click="crud.expandAll()">+</button>  Kit Name Click To Expand</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat-start="kit in crud.kits">
+        <td><button type="button" class="btn btn-primary" ng-click="crud.expand(kit)">+</button> Kit Name: {{kit.id}}</td>
+      </tr>
+      <tr ng-repeat-end ng-if="kit.expanded">
+        <td>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Part Number</th>
+                <th>Part Name</th>
+                <th>Quantity</th>
+                <th>Average Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="part in crud.kitParts[kit.id]">
+                <td ng-bind="part.number"></td>
+                <td ng-bind="part.note"></td>
+                <td ng-bind="part.quantity"></td>
+                <td ng-bind="part.averageCost"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -16,8 +16,8 @@ angular.module("myApp")
         content: '/harnessTab.html'
       },
       {
-        title: 'BOM',
-        content: ''
+        title: 'Kits',
+        content: '/kitTab.html'
       }
     ];
   });
