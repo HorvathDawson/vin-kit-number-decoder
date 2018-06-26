@@ -6,8 +6,12 @@ router.get('/loadNames', async function(req, res, next) {
   var data = await crud.loadKitName();
   res.send(data);
 });
-router.post('/loadKitParts', async function(req, res, next) {
-  var data = await crud.loadKitParts(req.body.kitNumber);
+router.get('/loadKitParts', async function(req, res, next) {
+  var data = await crud.loadKitParts();
+  res.send(data);
+});
+router.post('/loadKitPart', async function(req, res, next) {
+  var data = await crud.loadKitPart(req.body.kitNumber);
   res.send(data);
 });
 

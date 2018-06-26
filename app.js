@@ -11,6 +11,7 @@ var fileRoutes = require('./routes/spreadSheet');
 var vinCrudRoutes = require('./routes/vinCrud');
 var harnessCrudRoutes = require('./routes/harnessCrud');
 var kitCrudRoutes = require('./routes/kitCrud');
+var partsCrudRoutes = require('./routes/partsCrud');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/file', fileRoutes);
 app.use('/vinCrud', vinCrudRoutes);
 app.use('/harnessCrud', harnessCrudRoutes);
 app.use('/kitCrud', kitCrudRoutes);
+app.use('/partsCrud', partsCrudRoutes);
 
 
 // catch 404 and forward to error handler

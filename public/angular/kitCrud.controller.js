@@ -1,46 +1,104 @@
 angular.module("myApp")
   .controller("kitCrudController", function(dataInteraction) {
     var vm = this;
-    vm.kits;
+    vm.kitNames;
+    vm.parts;
+    vm.insertedParts = [];
+    vm.hasEcm = false;
     vm.allExpanded;
+    vm.alerts = [];
     vm.kitParts = {};
-    vm.receivePartsData = receivePartsData;
-    vm.receiveNameData = receiveNameData;
+    vm.addPart = addPart;
+    vm.receiveKitParts = receiveKitParts;
+    vm.receiveKitPart = receiveKitPart;
+    vm.receiveParts = receiveParts;
+    vm.receiveKitNames = receiveKitNames;
+    vm.closeAlert = closeAlert;
+    vm.addAlert = addAlert;
+    vm.insertKit = insertKit;
     vm.expand = expand;
     vm.expandAll = expandAll;
-    vm.receiveNameData();
-    function onExpand(kitNumber){
+    vm.clearForm = clearForm;
+    vm.receiveKitNames();
+    vm.receiveParts();
+    vm.receiveKitParts();
 
-    }
-    function receivePartsData(kits) {
-      kits.forEach((kit) => {
-        dataInteraction.receiveKitPartsData(kit.id).then(function successCallback(response) {
-          vm.kitParts[kit.id] = response.data;
-        }, function errorCallback(error) {
-          console.log('error getting data', error);
-        });
+    function closeAlert(index) {
+      vm.alerts.splice(index, 1);
+    };
+
+    function addAlert(msg, type) {
+      vm.alerts.push({
+        msg: msg,
+        type: type
+      });
+    };
+
+    function addPart(number) {
+      var temp = vm.insertedParts.filter((partNumber) => {
+        if (partNumber == number) {
+          return "failed"
+        }
       })
+      if (!temp[0]) {
+        vm.insertedParts.push(number)
+      } else {
+        vm.addAlert('already selected', 'danger')
+      }
     }
-    function receiveNameData() {
-      dataInteraction.receiveKitNameData().then(function successCallback(response) {
-        vm.kits = response.data;
-        vm.receivePartsData(vm.kits);
+    function clearForm() {
+      vm.hasEcm = false;
+      vm.insertedParts = [];
+    }
+    //for drop dropdown
+    function receiveParts() {
+      dataInteraction.receivePartsData().then(function successCallback(response) {
+        vm.parts = response.data;
       }, function errorCallback(error) {
         console.log('error getting data', error);
       });
     }
+    //recieve all parts for every kit
+    function receiveKitParts() {
+      dataInteraction.receiveKitPartsData().then(function successCallback(response) {
+        vm.kitParts = response.data;
+      }, function errorCallback(error) {
+        console.log('error getting data', error);
+      });
+    }
+    //recieve parts for the kit you specify
+    function receiveKitPart(kit) {
+      dataInteraction.receiveKitPartData(kit.id).then(function successCallback(response) {
+        vm.kitParts[kit.id] = response.data;
+      }, function errorCallback(error) {
+        console.log('error getting data', error);
+      })
+    }
+    //recieve the names of each kit
+    function receiveKitNames() {
+      dataInteraction.receiveKitNames().then(function successCallback(response) {
+        vm.kitNames = response.data;
+      }, function errorCallback(error) {
+        console.log('error getting data', error);
+      });
+    }
+
     function expand(kit) {
-      if(!kit.expanded){
+      if (!kit.expanded) {
         kit.expanded = true;
-      }else{
+      } else {
         kit.expanded = null;
       }
     }
+    function insertKit() {
+
+    }
     function expandAll() {
-      vm.kits.forEach((kit) => {
-        if(!vm.allExpanded){
+
+      vm.kitNames.forEach((kit) => {
+        if (!vm.allExpanded) {
           kit.expanded = true;
-        }else{
+        } else {
           kit.expanded = false;
         }
       })

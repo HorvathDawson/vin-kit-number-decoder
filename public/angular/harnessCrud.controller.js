@@ -49,7 +49,7 @@ angular.module("myApp")
         adapterHarness: vm.adapterHarness,
       }
       dataInteraction.insertHarness(insertData).then(function(data) {
-        // TODO: compare with data to see if values ar ealready in
+        // TODO: compare with data to see if values are already in
         vm.receiveData();
       }, function(err) {
         console.log("error adding value", err);

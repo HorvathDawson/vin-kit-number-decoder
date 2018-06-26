@@ -1,16 +1,51 @@
 <div ng-controller="kitCrudController as crud">
+  <div class="column">
+    <label>Insert Kit</label>
+    <form ng-submit="crud.insertKit()">
+      <div>
+        <label>Kit Number</label>
+        <input class="form-control input-sm" type="text" >
+      </div>
+      <br>
+      <div >
+        <label>Does Kit Have ECM?</label>
+        <button type="button" class="btn btn-primary" ng-model="crud.hasEcm" uib-btn-checkbox ng-bind="crud.hasEcm"></button>
+      </div>
+      <br>
+      <input type="text" value="{{crud.insertedParts}}" class="form-control input-sm" class="field left" readonly>
+      <br>
+      <div class="btn-group" uib-dropdown>
+        <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+          Button dropdown <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+          <li role="menuitem" ng-repeat="part in crud.parts"><a ng-click="crud.addPart(part.number)">{{part.number}}</a></li>
+        </ul>
+      </div>
+      <br>
+      <br>
+      <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-danger" ng-click="crud.clearForm()">Clear</button>
+      </div>
+    </form>
+    <br>
+    <div uib-alert dismiss-on-timeout="4000" ng-repeat="alert in crud.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="crud.closeAlert($index)">{{alert.msg}}</div>
+  </div>
+  <file-upload></file-upload>
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th><button type="button" class="btn btn-primary" ng-click="crud.expandAll()">+</button>  Kit Name Click To Expand</th>
+        <th><button type="button" class="glyphicon glyphicon-triangle-bottom" style="text-color: black;" ng-click="crud.expandAll()"></button> Kits - Click Arrow To Expand</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat-start="kit in crud.kits">
-        <td><button type="button" class="btn btn-primary" ng-click="crud.expand(kit)">+</button> Kit Name: {{kit.id}}</td>
+      <tr ng-repeat-start="kit in crud.kitNames">
+        <td><button type="button" class="glyphicon glyphicon-triangle-bottom" ng-click="crud.expand(kit)"></button> Kit Name: {{kit.id}}</td>
       </tr>
       <tr ng-repeat-end ng-if="kit.expanded">
         <td>
+          <label>Has ECM? {{kit.hasEcm}}</label>
           <table class="table table-condensed">
             <thead>
               <tr>

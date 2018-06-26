@@ -12,12 +12,16 @@ angular.module("myApp")
         content: '/specialTab.html'
       },
       {
-        title: 'Harness Types',
-        content: '/harnessTab.html'
-      },
-      {
         title: 'Kits',
         content: '/kitTab.html'
+      },
+      {
+        title: 'Parts',
+        content: '/partsTab.html'
+      },
+      {
+        title: 'Harness Names',
+        content: '/harnessTab.html'
       }
     ];
   });

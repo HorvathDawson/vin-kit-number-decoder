@@ -1,0 +1,81 @@
+<div ng-controller="partCrudController as crud">
+  <div class="column">
+    <label>Insert Part</label>
+    <form ng-submit="crud.insertPart()">
+      <div ng-class="{'has-error' : !crud.insertedNumber}">
+        <label>Part Number</label>
+        <input type="number" ng-model="crud.insertedNumber" class="form-control input-sm" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedYear">
+      </div>
+      <div>
+        <label>Average Cost</label>
+        <input type="text" ng-model="crud.insertedAverageCost" class="form-control input-sm">
+      </div>
+      <div>
+        <label>Info</label>
+        <input type="number" ng-model="crud.insertedNote" class="form-control input-sm">
+      </div>
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-danger" ng-click="crud.clearForm()">Clear</button>
+      </div>
+      <br>
+      <div uib-alert dismiss-on-timeout="4000" ng-repeat="alert in crud.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="crud.closeAlert($index)">{{alert.msg}}</div>
+    </form>
+  </div>
+  <file-upload></file-upload>
+
+  <table class="table table-condensed">
+    <thead>
+      <th>Part Number</th>
+      <th>Average Cost</th>
+      <th>Info</th>
+      <th>Edit</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat-start="part in crud.parts track by part.number" ng-if="!part.edit" ng-include="'displayParts'">
+      </tr>
+      <tr ng-repeat-end ng-if="part.edit" ng-include="'editParts'"></tr>
+    </tbody>
+  </table>
+</div>
+<script type="text/ng-template" id="displayParts">
+  <td>
+    <label ng-bind="part.number"></label>
+  </td>
+  <td>
+    <label ng-bind="part.averageCost"></label>
+  </td>
+  <td>
+    <label ng-bind="part.note"></label>
+  </td>
+  <td>
+    <button type="button" class="btn btn-primary" ng-click="crud.edit(part)">Edit</button>
+    <button class="btn btn-danger" popover-is-open="part.popover" uib-popover-template="'deletePopoverParts'">Delete</button>
+  </td>
+</script>
+<script type="text/ng-template" id="editParts">
+  <td>
+    <label ng-bind="part.number"></label>
+  </td>
+  <td>
+    <input type="text" ng-model='part.averageCost' class="form-control input-sm" />
+  </td>
+  <td>
+    <input type="text" ng-model='part.note' class="form-control input-sm" />
+  </td>
+  <td>
+    <button type="button" class="btn btn-primary" ng-click="crud.updatePart(part)">Save</button>
+    <button type="button" class="btn btn-danger" ng-click="crud.reset(part)">Cancel</button>
+  </td>
+</script>
+<script type="text/ng-template" id="deletePopoverParts">
+  <div>
+    <div class="popover-arrow"></div>
+    <h3 class="popover-title">Are you sure?</h3>
+    <div class="popover-content">
+      <button class="btn btn-danger" ng-click="crud.deletePart(part)">Confirm</button>
+      <button class="btn btn-primary" ng-click="crud.reset(part)">Stooopp!</button>
+    </div>
+  </div>
+</script>

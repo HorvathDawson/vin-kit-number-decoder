@@ -10,8 +10,13 @@ angular.module("myApp")
       this.updateHarness = updateHarness;
       this.insertHarness = insertHarness;
       this.deleteHarness = deleteHarness;
-      this.receiveKitNameData = receiveKitNameData;
+      this.receiveKitNames = receiveKitNames;
       this.receiveKitPartsData = receiveKitPartsData;
+      this.receivePartsData = receivePartsData;
+      this.insertPart = insertPart;
+      this.deletePart = deletePart;
+      this.updatePart = updatePart;
+      this.receiveKitPartData = receiveKitPartData;
 
       function receiveNormalData() {
         return $http({
@@ -19,37 +24,84 @@ angular.module("myApp")
           url: '/vinCrud/loadNormal'
         })
       };
-
       function receiveSpecialData() {
         return $http({
           method: 'GET',
           url: '/vinCrud/loadSpecial'
         })
+      };    
+      function receivePartsData() {
+        return $http({
+          method: 'GET',
+          url: '/partsCrud/load'
+        })
       };
-
       function receiveHarnessData() {
         return $http({
           method: 'GET',
           url: '/harnessCrud/load'
         })
       };
-
-      function receiveKitNameData() {
+      function receiveKitNames() {
         return $http({
           method: 'GET',
           url: '/kitCrud/loadNames'
         })
       };
-      function receiveKitPartsData(kitNumber) {
+      function receiveKitPartData(kitNumber) {
         return $http({
           method: 'POST',
           data: {
             kitNumber: kitNumber
           },
+          url: '/kitCrud/loadKitPart'
+        })
+      };
+      function receiveKitPartsData() {
+        return $http({
+          method: 'GET',
           url: '/kitCrud/loadKitParts'
         })
       };
 
+
+/* Vehicle Crud*/
+      function insertSpecialVehicle(insertData) {
+        return $http({
+          method: 'POST',
+          url: '/vinCrud/insert/special',
+          data: insertData,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        })
+      };
+      function insertVehicle(insertData) {
+        return $http({
+          method: 'POST',
+          url: '/vinCrud/insert/normal',
+          data: insertData,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        })
+      };
+      function updateVehicle(vehicle, type) {
+        var url = '/vinCrud/update';
+        if (type) {
+          url = url + type;
+        }else{
+          url = url + '/normal';
+        }
+        return $http({
+          method: 'POST',
+          url: url,
+          data: vehicle,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        })
+      };
       function deleteVehicle(vehicle, type) {
         var url = '/vinCrud/delete';
         if (type) {
@@ -67,44 +119,8 @@ angular.module("myApp")
         })
       };
 
-      function updateVehicle(vehicle, type) {
-        var url = '/vinCrud/update';
-        if (type) {
-          url = url + type;
-        }else{
-          url = url + '/normal';
-        }
-        return $http({
-          method: 'POST',
-          url: url,
-          data: vehicle,
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-          }
-        })
-      };
 
-      function insertSpecialVehicle(insertData) {
-        return $http({
-          method: 'POST',
-          url: '/vinCrud/insert/special',
-          data: insertData,
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-          }
-        })
-      };
-
-      function insertVehicle(insertData) {
-        return $http({
-          method: 'POST',
-          url: '/vinCrud/insert/normal',
-          data: insertData,
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-          }
-        })
-      };
+/*Harness Name CRUD*/
       function insertHarness(insertData) {
         return $http({
           method: 'POST',
@@ -125,12 +141,46 @@ angular.module("myApp")
           }
         })
       };
-
       function updateHarness(harness) {
         return $http({
           method: 'POST',
           url: '/harnessCrud/update',
           data: harness,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        })
+      };
+
+
+/*Parts CRUD*/
+
+
+      function insertPart(insertData) {
+        return $http({
+          method: 'POST',
+          url: '/partsCrud/insert',
+          data: insertData,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        })
+      };
+      function deletePart(part) {
+        return $http({
+          method: 'POST',
+          url: '/partsCrud/delete',
+          data: part,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+        })
+      };
+      function updatePart(part) {
+        return $http({
+          method: 'POST',
+          url: '/partsCrud/update',
+          data: part,
           headers: {
             'Content-Type': 'application/json; charset=utf-8'
           }
