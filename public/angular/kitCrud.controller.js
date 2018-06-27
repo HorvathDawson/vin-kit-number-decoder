@@ -2,32 +2,63 @@ angular.module("myApp")
   .controller("kitCrudController", function(dataInteraction) {
     var vm = this;
     vm.kitNames;
+    vm.expanded;
     vm.parts;
+    vm.newQuantity;
+    vm.updatedQuantity;
     vm.insertedParts = [];
+    vm.updatedPart;
+    vm.newPartQuantity = 1;
     vm.hasEcm = false;
-    vm.allExpanded;
     vm.insertedKitName;
     vm.alerts = [];
     vm.kitParts = {};
-    vm.addPart = addPart;
+    vm.confirmEdit = confirmEdit;
+    vm.insertPart = insertPart;
+    vm.deleteKit = deleteKit;
     vm.receiveKitParts = receiveKitParts;
     vm.receiveKitPart = receiveKitPart;
     vm.receiveParts = receiveParts;
     vm.receiveKitNames = receiveKitNames;
     vm.closeAlert = closeAlert;
     vm.addAlert = addAlert;
+    vm.updatePart = updatePart;
     vm.insertKit = insertKit;
     vm.expand = expand;
-    vm.expandAll = expandAll;
+    vm.reset = reset;
+    vm.updateKit = updateKit;
     vm.clearForm = clearForm;
     vm.removePart = removePart;
+    vm.editQuantity = editQuantity;
     vm.receiveKitNames();
     vm.receiveKitParts();
+    function confirmEdit(kitId, partNumber) {
 
+    }
+    function editQuantity(part) {
+      part.edit = true;
+      vm.updatedQuantity = part.quantity;
+    }
+    function reset(part) {
+      part.edit = null;
+    }
+    function deleteKit(kitId, partNumber) {
+        console.log(kitId + "  :  " + partNumber);
+    }
+    function updateKit(kitId) {
+      if(vm.updatedPart){
+        console.log('working');
+        console.log(kitId + "  :  " + vm.updatedPart.number + "  :  " + vm.newPartQuantity);
+      }else{
+        console.log('field missing');
+      }
+    }
     function removePart(index) {
       vm.insertedParts.splice(index, 1);
     };
-
+    function insertKit() {
+      console.log(vm.insertedParts);
+    };
     function closeAlert(index) {
       vm.alerts.splice(index, 1);
     };
@@ -37,15 +68,19 @@ angular.module("myApp")
         type: type
       });
     };
-
-    function addPart(number) {
+    function updatePart(part) {
+      vm.updatedPart = part;
+    }
+    function insertPart(part) {
       var temp = vm.insertedParts.filter((partNumber) => {
-        if (partNumber == number) {
-          return "failed"
-        }
+        return partNumber.number == part.number
       })
       if (!temp[0]) {
-        vm.insertedParts.push(number)
+        part = {
+          quantity: 1,
+          number: part.number
+        }
+        vm.insertedParts.push(part)
       } else {
         vm.addAlert('already selected', 'danger')
       }
@@ -56,12 +91,24 @@ angular.module("myApp")
       vm.insertedParts = [];
     }
     //for drop dropdown
-    function receiveParts() {
+    function receiveParts(alreadyUsedParts) {
       dataInteraction.receivePartsData().then(function successCallback(response) {
         vm.parts = response.data;
+        if(alreadyUsedParts){
+          vm.parts = vm.parts.filter((part) => {
+            var test = true;
+            alreadyUsedParts.forEach((usedPart) => {
+              if(part.number == usedPart.number){
+                test = false;
+              }
+            })
+            return test
+          })
+        }
       }, function errorCallback(error) {
         console.log('error getting data', error);
       });
+
     }
     //recieve all parts for every kit
     function receiveKitParts() {
@@ -89,25 +136,13 @@ angular.module("myApp")
     }
 
     function expand(kit) {
-      if (!kit.expanded) {
-        kit.expanded = true;
-      } else {
-        kit.expanded = null;
+      if(vm.expanded == kit.id){
+        vm.expanded = null;
+      }else{
+        vm.expanded = kit.id;
+        vm.newPartQuantity = 1;
+        vm.updatedPart = null;
       }
-    }
-    function insertKit() {
-
-    }
-    function expandAll() {
-
-      vm.kitNames.forEach((kit) => {
-        if (!vm.allExpanded) {
-          kit.expanded = true;
-        } else {
-          kit.expanded = false;
-        }
-      })
-      vm.allExpanded = !vm.allExpanded;
     }
 
   });

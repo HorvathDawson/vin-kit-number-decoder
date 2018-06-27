@@ -7,67 +7,118 @@
         <input class="form-control input-sm" type="text" ng-model="crud.insertedKitName">
       </div>
       <br>
-      <div >
+      <div>
+        <button type="button" class="btn btn-primary" ng-model="crud.hasEcm" uib-btn-checkbox>{{crud.hasEcm}}</button>
         <label>Does Kit Have ECM?</label>
-        <button type="button" class="btn btn-primary" ng-model="crud.hasEcm" uib-btn-checkbox ng-bind="crud.hasEcm"></button>
       </div>
       <br>
       <div class="btn-group" uib-dropdown>
-        <button id="single-button" ng-click="crud.receiveParts()" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+        <button id="insertPart" ng-click="crud.receiveParts()" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
           Parts list (choose at least one) <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-          <li role="menuitem" ng-repeat="part in crud.parts"><a ng-click="crud.addPart(part.number)">{{part.number}}</a></li>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="insertPart">
+          <li role="menuitem" ng-repeat="part in crud.parts"><a ng-click="crud.insertPart(part)">{{part.number}}</a></li>
         </ul>
       </div>
       <br>
       <br>
-      <ul>
-        <li ng-repeat="part in crud.insertedParts" class="form-group row">
-          <input type="text" class="col-xs-3" value={{part}} readonly>
-          <input type="number" class="col-xs-3" ng-model="" min="0">
-          <button type="button" class="glyphicon glyphicon-remove" ng-click="crud.removePart($index)"></button>
-        </li>
-      </ul>
+      <table>
+        <thead>
+          <tr ng-if="crud.insertedParts[0]">
+            <th>Part Number</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="part in crud.insertedParts">
+            <td><input type="text" style="width:100%" value={{part.number}} readonly></td>
+            <td><input type="number" style="width:100%" ng-model="part.quantity" min="1"></td>
+            <td><button type="button" class="glyphicon glyphicon-remove" ng-click="crud.removePart($index)"></button></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
       <div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-danger" ng-click="crud.clearForm()">Clear</button>
       </div>
     </form>
+    <br>
     <div uib-alert dismiss-on-timeout="4000" ng-repeat="alert in crud.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="crud.closeAlert($index)">{{alert.msg}}</div>
   </div>
   <file-upload></file-upload>
+
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th><button type="button" class="glyphicon glyphicon-triangle-bottom" style="text-color: black;" ng-click="crud.expandAll()"></button> Kits - Click Arrow To Expand</th>
+        <th>Kits - Click Arrows for Kit Information</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat-start="kit in crud.kitNames">
-        <td><button type="button" class="glyphicon glyphicon-triangle-bottom" ng-click="crud.expand(kit)"></button> Kit Name: {{kit.id}}</td>
+        <td><button type="button" class="glyphicon glyphicon-plus" ng-click="crud.expand(kit)"></button><label><b style="margin-left: 10px;"> Kit Name:</b> {{kit.id}}</label></td>
       </tr>
-      <tr ng-repeat-end ng-if="kit.expanded">
+      <tr ng-repeat-end ng-if="kit.id == crud.expanded">
         <td>
-          <label>Has ECM? {{kit.hasEcm}}</label>
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th>Part Number</th>
                 <th>Part Name</th>
+                <th>Part Number</th>
                 <th>Quantity</th>
                 <th>Average Cost</th>
+                <th>Edit Kit</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="part in crud.kitParts[kit.id]">
-                <td ng-bind="part.number"></td>
+              <tr ng-repeat-start="part in crud.kitParts[kit.id]" ng-if="!part.edit">
                 <td ng-bind="part.note"></td>
+                <td ng-bind="part.number"></td>
                 <td ng-bind="part.quantity"></td>
                 <td ng-bind="part.averageCost"></td>
+                <td>
+                  <button type="button" class="btn btn-primary" ng-click="crud.editQuantity(part)">Edit Quantity</button>
+                  <button type="button" class="btn btn-danger" ng-click="crud.deleteKit(kit.id, part.number)">Remove Part</button>
+                </td>
+              </tr>
+              <tr ng-repeat-end ng-if="part.edit">
+                <td ng-bind="part.note"></td>
+                <td ng-bind="part.number"></td>
+                <td><input ng-model="crud.updatedQuantity"></td>
+                <td ng-bind="part.averageCost"></td>
+                <td>
+                  <button type="button" class="btn btn-primary" ng-click="crud.reset(part)">cancel</button>
+                  <button type="button" class="btn btn-danger" ng-click="crud.confirmEdit(kit.id, part.number)">Confirm</button>
+                </td>
+              </tr>
+              <tr style="height: 30px;">
+              </tr>
+              <tr>
+                <td>
+                  <div class="btn-group" uib-dropdown>
+                    <button id="updatePart" style="100%" placeholder="click to choose part number" ng-click="crud.receiveParts(crud.kitParts[kit.id])" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                        Choose Part Number to Add <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="updatePart">
+                      <li role="menuitem" ng-repeat="part in crud.parts"><a ng-click="crud.updatePart(part)">{{part.number}}</a></li>
+                    </ul>
+                  </div>
+                </td>
+                <td><input type="text" value="{{crud.updatedPart.number}}" style="width: 100%" readonly></td>
+                <td><input type="number" style="width:100%" min="1" ng-model="crud.newPartQuantity"></td>
+                <td></td>
+                <td><button type="button" class="btn btn-primary" ng-click="crud.updateKit(kit.id)">Add Part</button></td>
+              </tr>
+              <tr>
+                <td>Does Kit Have Ecm Connection?</td>
+                <td><b>{{kit.hasEcm}}</b></td>
+                <td></td>
+                <td></td>
+                <td><button type="button" class="btn btn-primary">Click to Change Ecm</button></td>
               </tr>
             </tbody>
           </table>
+
         </td>
       </tr>
     </tbody>
