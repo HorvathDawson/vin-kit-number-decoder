@@ -47,16 +47,16 @@ angular.module("myApp")
     }
     function updateKit(kitId) {
       if(vm.updatedPart){
-        console.log('working');
         console.log(kitId + "  :  " + vm.updatedPart.number + "  :  " + vm.newPartQuantity);
       }else{
-        console.log('field missing');
+        alert("missing field")
       }
     }
     function removePart(index) {
       vm.insertedParts.splice(index, 1);
     };
     function insertKit() {
+      console.log(vm.hasEcm + "  :  " + vm.insertedKitName);
       console.log(vm.insertedParts);
     };
     function closeAlert(index) {
