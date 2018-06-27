@@ -1,5 +1,13 @@
+ul {
+  list-style-type: none;
+  padding-left: 30px;
+}
+
 .glyphicon-triangle-bottom {
   color: black;
+}
+.glyphicon-remove{
+  height: 25px;
 }
 table.table {
   border: 1px solid #1C6EA4;

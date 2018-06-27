@@ -6,6 +6,7 @@ angular.module("myApp")
     vm.insertedParts = [];
     vm.hasEcm = false;
     vm.allExpanded;
+    vm.insertedKitName;
     vm.alerts = [];
     vm.kitParts = {};
     vm.addPart = addPart;
@@ -19,14 +20,17 @@ angular.module("myApp")
     vm.expand = expand;
     vm.expandAll = expandAll;
     vm.clearForm = clearForm;
+    vm.removePart = removePart;
     vm.receiveKitNames();
-    vm.receiveParts();
     vm.receiveKitParts();
+
+    function removePart(index) {
+      vm.insertedParts.splice(index, 1);
+    };
 
     function closeAlert(index) {
       vm.alerts.splice(index, 1);
     };
-
     function addAlert(msg, type) {
       vm.alerts.push({
         msg: msg,
@@ -48,6 +52,7 @@ angular.module("myApp")
     }
     function clearForm() {
       vm.hasEcm = false;
+      vm.insertedKitName = null;
       vm.insertedParts = [];
     }
     //for drop dropdown

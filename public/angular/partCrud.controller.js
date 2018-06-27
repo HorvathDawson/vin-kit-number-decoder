@@ -42,9 +42,9 @@ angular.module("myApp")
               errno: 19,
               code: "SQLITE_CONSTRAINT"
             })) {
-            vm.addAlert('vehicle is already in database', 'danger')
+            vm.addAlert('part is already in database', 'danger')
           } else {
-            vm.addAlert('you have successfully added a vehicle', 'success')
+            vm.addAlert('you have successfully added a part', 'success')
           }
           vm.receiveData();
         }, function(err) {
