@@ -33,7 +33,7 @@ angular.module("myApp")
     vm.receiveKitNames();
     vm.receiveKitParts();
     function confirmEdit(kitId, partNumber) {
-
+      console.log(kitId + "  :  " + partNumber + "  :  " + vm.updatedQuantity);
     }
     function editQuantity(part) {
       part.edit = true;
