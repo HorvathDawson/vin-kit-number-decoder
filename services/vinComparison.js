@@ -63,6 +63,9 @@ const comparison = {
 
 
       input.forEach((vehicle) => {
+        // TODO: compare harness name here and add to all loadVehicles
+        // TODO: compare kit here and add all info to vehicle object
+
         let specialEntry = specialDatabaseIndex[(vehicle.ModelYear + ':' + vehicle.Make + ':' + vehicle.EngineModel).replace(/\s/g, '')];
 
         if (typeof specialEntry !== 'undefined') {
@@ -74,10 +77,8 @@ const comparison = {
 
         if (typeof mainEntry !== 'undefined') {
           test(data, vehicle, mainEntry);
-          // do your something
           return;
         }
-        // do your error case
         let errorEntry = {
           harnessTypeOne: 'Not Found',
           harnessTypeTwo: 'Not Found',
@@ -86,7 +87,6 @@ const comparison = {
         test(data, vehicle, errorEntry);
         return;
       });
-      console.log(data);
       return data;
 
     } catch (error) {
