@@ -17,8 +17,24 @@ router.post('/loadKitPart', async function(req, res, next) {
 
 /*main table crud routing */
 
-router.post('/insert', async function(req, res, next) {
+router.post('/insertKit', async function(req, res, next) {
   try {
+    data = {
+      kitId: req.body.kitId,
+      hasEcm: req.body.hasEcm,
+      parts: req.body.parts
+    }
+    await crud.insertKit(data);
+    res.end();
+  } catch (error) {
+    res.send({
+      error: error
+    })
+  }
+});
+router.post('/insertKitPart', async function(req, res, next) {
+  try {
+    await crud.insertKitPart(req.body)
     res.end();
   } catch (error) {
     res.send({
@@ -27,11 +43,21 @@ router.post('/insert', async function(req, res, next) {
   }
 });
 
-router.post('/update', async function(req, res, next) {
+router.post('/updateQuantity', async function(req, res, next) {
+  await crud.updateQuantity(req.body);
+  res.end();
+});
+router.post('/updateEcm', async function(req, res, next) {
+  await crud.updateEcm(req.body);
   res.end();
 });
 
-router.post('/delete', async function(req, res, next) {
+router.post('/deletePart', async function(req, res, next) {
+  await crud.deleteKitPart(req.body);
+  res.end();
+});
+router.post('/deleteKit', async function(req, res, next) {
+  await crud.deleteKit(req.body.kitId)
   res.end();
 });
 
