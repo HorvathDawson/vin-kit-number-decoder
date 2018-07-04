@@ -54,11 +54,11 @@ angular.module("myApp")
 
     function insertVehicle() {
       var insertData = {
-        harnessTypeOne: vm.insertedHarnessTypeOne,
-        harnessTypeTwo: vm.insertedHarnessTypeTwo,
+        harnessNumberOne: vm.insertedharnessNumberOne,
+        harnessNumberTwo: vm.insertedharnessNumberTwo,
         year: vm.insertedYear,
         make: vm.insertedMake,
-        adapterType: vm.insertedAdapterType,
+        adapterNumber: vm.insertedadapterNumber,
         engine: vm.insertedEngine
       }
         if (vm.insertedYear && vm.insertedMake) {
@@ -81,12 +81,12 @@ angular.module("myApp")
     }
 
     function clearForm() {
-      vm.insertedHarnessTypeOne = null;
-      vm.insertedHarnessTypeTwo = null;
+      vm.insertedharnessNumberOne = null;
+      vm.insertedharnessNumberTwo = null;
       vm.insertedYear = null;
       vm.insertedMake = null;
       vm.insertedEngine = null;
-      vm.insertedAdapterType = null;
+      vm.insertedadapterNumber = null;
     }
 
     function reset(vehicle) {

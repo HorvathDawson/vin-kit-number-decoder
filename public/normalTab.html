@@ -13,16 +13,16 @@
           <input type="text" ng-model="crud.insertedMake" class="form-control input-sm" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedMake">
         </div>
         <div>
-          <label>Harness Type</label>
-          <input type="text" ng-model="crud.insertedHarnessTypeOne" class="form-control input-sm">
+          <label>Harness Number</label>
+          <input type="text" ng-model="crud.insertedharnessNumberOne" class="form-control input-sm">
         </div>
         <div>
-          <label>Additional Harness Type or Note</label>
-          <input type="text" ng-model="crud.insertedHarnessTypeTwo" class="form-control input-sm">
+          <label>Additional Harness Number or Note</label>
+          <input type="text" ng-model="crud.insertedharnessNumberTwo" class="form-control input-sm">
         </div>
         <div>
-          <label>Adapter Type</label>
-          <input type="number" ng-model="crud.insertedAdapterType" class="form-control input-sm">
+          <label>Adapter Number</label>
+          <input type="number" ng-model="crud.insertedadapterNumber" class="form-control input-sm">
         </div>
         <div>
           <br>
@@ -42,8 +42,8 @@
         <tr>
           <th>Year</th>
           <th>Make</th>
-          <th colspan="2">Harness Types</th>
-          <th>Adapter Type</th>
+          <th colspan="2">Harness Numbers</th>
+          <th>Adapter Number</th>
           <th>Edit</th>
         </tr>
       </thead>
@@ -60,13 +60,13 @@
             <label ng-bind="vehicle.make"></label>
           </td>
           <td>
-            <label ng-bind="vehicle.harnessTypeOne"></label>
+            <label ng-bind="vehicle.harnessNumberOne"></label>
           </td>
           <td>
-            <label ng-bind="vehicle.harnessTypeTwo"></label>
+            <label ng-bind="vehicle.harnessNumberTwo"></label>
           </td>
           <td>
-            <label ng-bind="vehicle.adapterType"></label>
+            <label ng-bind="vehicle.adapterNumber"></label>
           </td>
           <td>
             <button type="button" class="btn btn-primary" ng-click="crud.edit(vehicle)">Edit</button>
@@ -81,13 +81,13 @@
             <label ng-bind="vehicle.make"></label>
           </td>
           <td>
-            <input type="text" ng-model='vehicle.harnessTypeOne' class="form-control input-sm" />
+            <input type="text" ng-model='vehicle.harnessNumberOne' class="form-control input-sm" />
           </td>
           <td>
-            <input type="text" ng-model='vehicle.harnessTypeTwo' class="form-control input-sm" />
+            <input type="text" ng-model='vehicle.harnessNumberTwo' class="form-control input-sm" />
           </td>
           <td>
-            <input type="number" ng-model='vehicle.adapterType' class="form-control input-sm" />
+            <input type="number" ng-model='vehicle.adapterNumber' class="form-control input-sm" />
           </td>
           <td>
             <button type="button" class="btn btn-primary" ng-click="crud.updateVehicle(vehicle)">Save</button>

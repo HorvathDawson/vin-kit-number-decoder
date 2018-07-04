@@ -57,7 +57,7 @@
     </thead>
     <tbody>
       <tr ng-repeat-start="kit in crud.kitNames">
-        <td style="height: 40px;"><button type="button" class="glyphicon glyphicon-plus" ng-click="crud.expand(kit)"></button><label><b style="margin-left: 10px;"> Kit Name:</b> {{kit.id}}</label></td>
+        <td style="height: 40px;"><button type="button" ng-class="(kit.id == crud.expanded)? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'" ng-click="crud.expand(kit)"></button><label><b style="margin-left: 10px;"> Kit Name:</b> {{kit.id}}</label></td>
         <td><button type="button" class="btn btn-danger" popover-is-open="kit.popover" uib-popover-template="'deletePopoverKit'">Delete Kit</button></td>
         <script type="text/ng-template" id="deletePopoverKit">
           <div>

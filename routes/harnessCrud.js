@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var crud = require('../services/harnessDbInteraction.js');
+var crud = require('../services/harnessTableInteraction.js');
 
 router.get('/load', async function(req, res, next) {
   var data = await crud.loadHarness();

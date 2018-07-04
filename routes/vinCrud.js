@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var crud = require('../services/vehicleDbInteraction.js');
+var crud = require('../services/vehicleTableInteraction.js');
 
 router.get('/loadNormal', async function(req, res, next) {
   var all = await crud.loadVehicles();
@@ -24,9 +24,9 @@ router.post('/insert/normal', async function(req, res, next) {
     var insertedData = {
       year: req.body.year,
       make: req.body.make,
-      harnessTypeOne: req.body.harnessTypeOne,
-      harnessTypeTwo: req.body.harnessTypeTwo,
-      adapterType: req.body.adapterType
+      harnessNumberOne: req.body.harnessNumberOne,
+      harnessNumberTwo: req.body.harnessNumberTwo,
+      adapterNumber: req.body.adapterNumber
     }
     await crud.insertVehicle(insertedData)
     res.end();
@@ -38,9 +38,9 @@ router.post('/insert/normal', async function(req, res, next) {
 });
 router.post('/update/normal', async function(req, res, next) {
   var updateData = {
-    harnessTypeOne: req.body.harnessTypeOne,
-    harnessTypeTwo: req.body.harnessTypeTwo,
-    adapterType: req.body.adapterType,
+    harnessNumberOne: req.body.harnessNumberOne,
+    harnessNumberTwo: req.body.harnessNumberTwo,
+    adapterNumber: req.body.adapterNumber,
     yearId: req.body.year,
     makeId: req.body.make
   }
@@ -64,9 +64,9 @@ router.post('/insert/special', async function(req, res, next) {
       year: req.body.year,
       make: req.body.make,
       engine: req.body.engine,
-      harnessTypeOne: req.body.harnessTypeOne,
-      harnessTypeTwo: req.body.harnessTypeTwo,
-      adapterType: req.body.adapterType
+      harnessNumberOne: req.body.harnessNumberOne,
+      harnessNumberTwo: req.body.harnessNumberTwo,
+      adapterNumber: req.body.adapterNumber
     }
     await crud.insertSpecialVehicle(insertedData)
     res.end();
@@ -78,9 +78,9 @@ router.post('/insert/special', async function(req, res, next) {
 });
 router.post('/update/special', async function(req, res, next) {
   var updateData = {
-    harnessTypeOne: req.body.harnessTypeOne,
-    harnessTypeTwo: req.body.harnessTypeTwo,
-    adapterType: req.body.adapterType,
+    harnessNumberOne: req.body.harnessNumberOne,
+    harnessNumberTwo: req.body.harnessNumberTwo,
+    adapterNumber: req.body.adapterNumber,
     yearId: req.body.year,
     makeId: req.body.make,
     engineId: req.body.engine

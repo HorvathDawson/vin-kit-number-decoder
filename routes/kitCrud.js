@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var crud = require('../services/kitDbInteraction.js');
+var crud = require('../services/kitTableInteraction.js');
 
 router.get('/loadNames', async function(req, res, next) {
   var data = await crud.loadKitName();

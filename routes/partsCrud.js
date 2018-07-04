@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var crud = require('../services/partsDbInteraction.js');
+var crud = require('../services/partsTableInteraction.js');
 
 router.get('/load', async function(req, res, next) {
   var data = await crud.loadParts();
