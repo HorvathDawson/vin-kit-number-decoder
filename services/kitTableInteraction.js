@@ -2,7 +2,7 @@ var sqlite = require('sqlite');
 
 var INSERT_PART_DATA = 'INSERT INTO kitPart (kit_id, part_number, quantity) VALUES (?, ?, ?)';
 var INSERT_KIT = 'INSERT INTO kit (id, hasEcm) VALUES (?, ?)';
-var SELECT_KIT_DATA = 'SELECT p.number, p.note, kp.quantity, p.averageCost FROM kitPart kp, part p, kit k  WHERE p.number = kp.part_number AND kp.kit_id = k.id AND k.id = ? ORDER BY p.number ASC';
+var SELECT_KIT_DATA = 'SELECT p.partType, p.number, p.note, kp.quantity, p.averageCost FROM kitPart kp, part p, kit k  WHERE p.number = kp.part_number AND kp.kit_id = k.id AND k.id = ? ORDER BY p.number ASC';
 var SELECT_KIT_NAMES = 'SELECT id, hasEcm FROM kit ORDER BY id ASC';
 var DELETE_PART = 'DELETE FROM kitPart WHERE kit_id = ? AND part_number = ?';
 var DELETE_KIT_PARTS = 'DELETE FROM kitPart WHERE kit_id = ?';

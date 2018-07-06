@@ -44,7 +44,6 @@ angular.module("myApp")
         url: '/partsCrud/load'
       })
     };
-
     function receiveHarnessData() {
       return $http({
         method: 'GET',

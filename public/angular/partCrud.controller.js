@@ -2,10 +2,12 @@ angular.module("myApp")
   .controller("partCrudController", function(dataInteraction) {
     var vm = this;
     vm.insertedNote;
+    vm.insertedType;
     vm.insertedNumber;
     vm.insertedAverageCost;
     vm.alerts = [];
     vm.parts;
+    vm.partTypes;
     vm.clearForm = clearForm;
     vm.closeAlert = closeAlert;
     vm.insertPart = insertPart;
@@ -19,11 +21,12 @@ angular.module("myApp")
 
     function receiveData() {
       dataInteraction.receivePartsData().then(function successCallback(response) {
-        vm.parts = response.data;
+        vm.parts = response.data.data;
+        vm.partTypes = response.data.types;
       }, function errorCallback(error) {
         console.log('error getting data', error);
       });
-    }
+    };
     function addAlert(msg, type) {
       vm.alerts.push({
         msg: msg,
@@ -33,10 +36,11 @@ angular.module("myApp")
     function insertPart(){
       var insertData = {
         number: vm.insertedNumber,
+        partType: vm.insertedType,
         note: vm.insertedNote,
         averageCost: vm.insertedAverageCost
       }
-      if(vm.insertedNumber){
+      if(vm.insertedNumber && vm.insertedType){
         dataInteraction.insertPart(insertData).then(function(data) {
           if (JSON.stringify(data.data.error) == JSON.stringify({
               errno: 19,

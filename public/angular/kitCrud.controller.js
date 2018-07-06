@@ -61,6 +61,7 @@ angular.module("myApp")
         vm.expanded = null;
       } else {
         vm.expanded = kit.id;
+        vm.selectedKitPart = null;
         vm.receiveKitPart(kit)
         vm.newPartQuantity = 1;
         vm.updatedPart = null;
@@ -92,37 +93,26 @@ angular.module("myApp")
       vm.insertedKitName = null;
       vm.insertedParts = [];
     }
-    /* addInsertPart and removeInsertPart are for the table of parts when inserting new kits */
+    vm.receiveParts();
     function addInsertPart(part) {
-      var temp = vm.insertedParts.filter((partNumber) => {
-        return partNumber.number == part.number
-      })
-      if (!temp[0]) {
-        part = {
-          quantity: 1,
-          number: part.number
-        }
-        vm.insertedParts.push(part)
-      } else {
-        vm.addAlert('already selected', 'danger')
-      }
+      part.quantity = 1;
+      vm.insertedParts.push(part);
     }
     function removeInsertPart(index) {
       vm.insertedParts.splice(index, 1);
     };
     function insertKit() {
-      if(vm.insertedKitName){
+      if(vm.insertedKitName && vm.insertedParts.length){
         let data = {
           hasEcm: vm.hasEcm,
           kitId: vm.insertedKitName,
           parts: vm.insertedParts
         }
         dataInteraction.insertKit(data).then((data) => {
-          if (JSON.stringify(data.data.error) == JSON.stringify({
-              errno: 19,
-              code: "SQLITE_CONSTRAINT"
-            })) {
-            vm.addAlert('Kit Number is already in database', 'danger')
+          if (data.data.error){
+              if (data.data.error.errno == 19 && data.data.error.code == "SQLITE_CONSTRAINT") {
+                vm.addAlert('Kit Number is already in database', 'danger')
+              }
           } else {
             vm.clearForm();
             vm.receiveKitNames();
@@ -133,10 +123,9 @@ angular.module("myApp")
           }
         });
       }else{
-        vm.addAlert('missing Kit Name', 'danger')
+        vm.addAlert('missing Kit field', 'danger')
       }
     };
-
 
     /*delete kit*/
     function deleteKit(kitId) {
@@ -161,6 +150,7 @@ angular.module("myApp")
     /*inserting*/
     function selectedKitPartToAdd(part) {
       vm.selectedKitPart = part;
+
     }
     function insertKitPart(kit) {
       if (vm.selectedKitPart) {
@@ -170,6 +160,7 @@ angular.module("myApp")
           quantity: vm.newPartQuantity
         }
         dataInteraction.insertKitPart(data).then(() => {
+          vm.selectedKitPart = null;
           vm.receiveKitPart(kit);
         })
       } else {
@@ -193,16 +184,19 @@ angular.module("myApp")
     //for drop dropdown
     function receiveParts(existingParts) {
       dataInteraction.receivePartsData().then(function successCallback(response) {
-        vm.parts = response.data;
+        vm.parts = response.data.data;
         if (existingParts) {
           vm.parts = vm.parts.filter((part) => {
-            var test = true;
+            var check = true;
             existingParts.forEach((usedPart) => {
               if (part.number == usedPart.number) {
-                test = false;
+                check = false;
+              }
+              if (part.partType == usedPart.partType) {
+                check = false;
               }
             })
-            return test
+            return check
           })
         }
       }, function errorCallback(error) {

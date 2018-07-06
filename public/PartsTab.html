@@ -4,7 +4,19 @@
     <form ng-submit="crud.insertPart()">
       <div ng-class="{'has-error' : !crud.insertedNumber}">
         <label>Part Number</label>
-        <input type="number" ng-model="crud.insertedNumber" class="form-control input-sm" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedYear">
+        <input type="number" ng-model="crud.insertedNumber" class="form-control input-sm" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedNumber">
+      </div>
+      <div ng-class="{'has-error' : !crud.insertedType}">
+        <label>Part Type</label>
+        <br>
+        <div class="btn-group" uib-dropdown>
+          <input  id="insertPartType" placeholder="click for dropdown" uib-dropdown-toggle type="text" ng-model="crud.insertedType" class="form-control input-sm" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedType" readonly>
+          <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="insertPartType">
+            <li role="menuitem" ng-repeat="part in crud.partTypes"><a ng-click="crud.insertedType = part.partType">{{part.partType}}</a></li>
+            <!-- can not edit parts list through ui because modifying/delteing
+            any initial type would break code because then the partType table would be different than the parts table-->
+          </ul>
+        </div>
       </div>
       <div>
         <label>Average Cost</label>
@@ -28,6 +40,7 @@
   <table class="table table-condensed">
     <thead>
       <th>Part Number</th>
+      <th>Part Type</th>
       <th>Average Cost</th>
       <th>Info</th>
       <th>Edit</th>
@@ -44,6 +57,9 @@
     <label ng-bind="part.number"></label>
   </td>
   <td>
+    <label ng-bind="part.partType"> </label>
+  </td>
+  <td>
     <label ng-bind="part.averageCost"></label>
   </td>
   <td>
@@ -51,12 +67,20 @@
   </td>
   <td>
     <button type="button" class="btn btn-primary" ng-click="crud.edit(part)">Edit</button>
-    <button class="btn btn-danger" popover-is-open="part.popover" uib-popover-template="'deletePopoverParts'">Delete</button>
+    <button class="btn btn-danger" popover-is-open="part.popover" uib-popover-template="'deletePopoverParts'" uib-tooltip="Deleting a part here will remove in from any kit it is used by" tooltip-placement="top" tooltip-trigger="'mouseenter'">Delete</button>
   </td>
 </script>
 <script type="text/ng-template" id="editParts">
   <td>
     <label ng-bind="part.number"></label>
+  </td>
+  <td>
+    <div class="btn-group" uib-dropdown>
+      <input  id="updatePartType" placeholder="click for dropdown" uib-dropdown-toggle type="text" ng-model="part.partType" class="form-control input-sm" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedType" readonly>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="updatePartType">
+        <li role="menuitem" ng-repeat="dropdownPart in crud.partTypes"><a ng-click="part.partType = dropdownPart.partType">{{dropdownPart.partType}}</a></li>
+      </ul>
+    </div>
   </td>
   <td>
     <input type="text" ng-model='part.averageCost' class="form-control input-sm" />

@@ -1,8 +1,9 @@
 var sqlite = require('sqlite');
 
 var SELECT_DATA = 'SELECT * FROM part';
-var INSERT_DATA = 'INSERT INTO part (number, averageCost, note) VALUES (?, ?, ?)';
-var UPDATE_DATA = 'UPDATE part SET averageCost = ?, note = ? WHERE number = ?';
+var SELECT_TYPE_DATA = 'SELECT * FROM partType';
+var INSERT_DATA = 'INSERT INTO part (number, partType, averageCost, note) VALUES (?, ?, ?, ?)';
+var UPDATE_DATA = 'UPDATE part SET averageCost = ?, partType = ?, note = ? WHERE number = ?';
 var DELETE_DATA = 'DELETE FROM part WHERE number = ?';
 
 /* Opens database for access */
@@ -26,10 +27,18 @@ const crud = {
       return Promise.reject(error);
     }
   },
+  async loadPartTypes() {
+    try {
+      const db = await openDataBase();
+      return db.all(SELECT_TYPE_DATA);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   async insertPart(data) {
     try {
       const db = await openDataBase();
-      await db.run(INSERT_DATA, data.number, data.averageCost, data.note);
+      await db.run(INSERT_DATA, data.number, data.partType, data.averageCost, data.note);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -45,7 +54,7 @@ const crud = {
   async updatePart(data) {
     try {
       const db = await openDataBase();
-      await db.run(UPDATE_DATA, data.averageCost, data.note, data.number);
+      await db.run(UPDATE_DATA, data.averageCost, data.partType, data.note, data.number);
     } catch (error) {
       return Promise.reject(error);
     }
