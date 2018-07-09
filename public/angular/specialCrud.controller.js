@@ -29,7 +29,7 @@ angular.module("myApp")
       dataInteraction.receiveSpecialData().then(function successCallback(response) {
         vm.vehicles = response.data;
       }, function errorCallback(error) {
-        console.log('error getting data', error);
+        console.log('error getting data');
       });
     };
 
@@ -37,7 +37,7 @@ angular.module("myApp")
       dataInteraction.deleteVehicle(vehicle, type).then(function() {
         vm.receiveData();
       }, function(err) {
-        console.log("error deleting value", err);
+        console.log("error deleting value");
       });
     };
 
@@ -46,7 +46,7 @@ angular.module("myApp")
         vehicle.edit = null;
         vm.receiveData();
       }, function(err) {
-        console.log("error updating value", err);
+        console.log("error updating value");
       });
     };
 
@@ -61,17 +61,16 @@ angular.module("myApp")
       }
       if (vm.insertedYear && vm.insertedMake && vm.insertedEngine) {
         dataInteraction.insertSpecialVehicle(insertData).then(function(data) {
-          if (JSON.stringify(data.data.error) == JSON.stringify({
-              errno: 19,
-              code: "SQLITE_CONSTRAINT"
-            })) {
-            vm.addAlert('vehicle is already in database', 'danger')
+          if (data.data.error){
+              if (data.data.error.errno == 19 && data.data.error.code == "SQLITE_CONSTRAINT") {
+                vm.addAlert('vehicle is already in database', 'danger')
+              }
           } else {
             vm.addAlert('you have successfully added a vehicle', 'success')
           }
           vm.receiveData();
         }, function(err) {
-          console.log("error adding value", err);
+          console.log("error adding value");
         });
       } else {
         vm.addAlert('missing field', 'danger');

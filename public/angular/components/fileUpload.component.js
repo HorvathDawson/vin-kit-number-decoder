@@ -22,7 +22,7 @@ function fileUpload($http) {
       .then(function(data) {
         XLSX.writeFile(data.data, "vinInformation.xlsx");
       }, function(err) {
-        console.log("error adding value", err);
+        console.log("error uploading file");
       });
   }
 }

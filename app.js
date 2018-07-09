@@ -3,8 +3,10 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var compression = require('compression');
 var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
+var helmet = require('helmet');
 
 var routes = require('./routes/index');
 var fileRoutes = require('./routes/spreadSheet');
@@ -19,7 +21,7 @@ var app = express();
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts/'}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
+app.use(helmet());
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -36,7 +38,7 @@ app.use('/vinCrud', vinCrudRoutes);
 app.use('/harnessCrud', harnessCrudRoutes);
 app.use('/kitCrud', kitCrudRoutes);
 app.use('/partsCrud', partsCrudRoutes);
-
+app.use(compression());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

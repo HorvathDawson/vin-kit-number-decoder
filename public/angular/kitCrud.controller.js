@@ -46,7 +46,6 @@ angular.module("myApp")
 
     /* misc stuff */
     function changeEcm(kit) {
-      console.log(kit.id + "  :  " + ((kit.hasEcm)? 0 : 1));
       let data = {
         kitId: kit.id,
         hasEcm: ((kit.hasEcm)? 0 : 1)
@@ -200,7 +199,7 @@ angular.module("myApp")
           })
         }
       }, function errorCallback(error) {
-        console.log('error getting data', error);
+        console.log('error getting data');
       });
     }
     //recieve all parts for every kit
@@ -208,7 +207,7 @@ angular.module("myApp")
       dataInteraction.receiveKitPartsData().then(function successCallback(response) {
         vm.kitParts = response.data;
       }, function errorCallback(error) {
-        console.log('error getting data', error);
+        console.log('error getting data');
       });
     }
     //recieve parts for the kit you specify
@@ -216,7 +215,7 @@ angular.module("myApp")
       dataInteraction.receiveKitPartData(kit.id).then(function successCallback(response) {
         vm.kitParts[kit.id] = response.data;
       }, function errorCallback(error) {
-        console.log('error getting data', error);
+        console.log('error getting data');
       })
     }
     //recieve the names of each kit
@@ -224,7 +223,7 @@ angular.module("myApp")
       dataInteraction.receiveKitNames().then(function successCallback(response) {
         vm.kitNames = response.data;
       }, function errorCallback(error) {
-        console.log('error getting data', error);
+        console.log('error getting data');
       });
     }
 

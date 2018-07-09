@@ -20,7 +20,7 @@ angular.module("myApp")
       dataInteraction.receiveHarnessData().then(function successCallback(response) {
         vm.harnesses = response.data;
       }, function errorCallback(error) {
-        console.log('error getting data', error);
+        console.log('error getting data');
       });
     }
 
@@ -49,10 +49,9 @@ angular.module("myApp")
         adapterHarness: vm.adapterHarness,
       }
       dataInteraction.insertHarness(insertData).then(function(data) {
-        // TODO: compare with data to see if values are already in
         vm.receiveData();
       }, function(err) {
-        console.log("error adding value", err);
+        console.log("error adding value");
       });
     }
 
@@ -61,7 +60,7 @@ angular.module("myApp")
         harness.edit = null;
         vm.receiveData();
       }, function(err) {
-        console.log("error updating value", err);
+        console.log("error updating value");
       });
     }
 
@@ -69,7 +68,7 @@ angular.module("myApp")
       dataInteraction.deleteHarness(harness).then(function() {
         vm.receiveData();
       }, function(err) {
-        console.log("error deleting value", err);
+        console.log("error deleting value");
       });
     }
 

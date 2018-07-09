@@ -1,7 +1,9 @@
 var express = require('express');
+var compression = require('compression');
 var router = express.Router();
 var crud = require('../services/kitTableInteraction.js');
 
+router.use(compression())
 router.get('/loadNames', async function(req, res, next) {
   var data = await crud.loadKitName();
   res.send(data);
@@ -44,21 +46,46 @@ router.post('/insertKitPart', async function(req, res, next) {
 });
 
 router.post('/updateQuantity', async function(req, res, next) {
-  await crud.updateQuantity(req.body);
-  res.end();
+  try{
+    await crud.updateQuantity(req.body);
+    res.end();
+  } catch (error) {
+    res.send({
+      error: error
+    })
+  }
+
 });
 router.post('/updateEcm', async function(req, res, next) {
-  await crud.updateEcm(req.body);
-  res.end();
+  try{
+    await crud.updateEcm(req.body);
+    res.end();
+  } catch (error) {
+    res.send({
+      error: error
+    })
+  }
 });
 
 router.post('/deletePart', async function(req, res, next) {
-  await crud.deleteKitPart(req.body);
-  res.end();
+  try{
+    await crud.deleteKitPart(req.body);
+    res.end();
+  } catch (error) {
+    res.send({
+      error: error
+    })
+  }
 });
 router.post('/deleteKit', async function(req, res, next) {
-  await crud.deleteKit(req.body.kitId)
-  res.end();
+  try{
+    await crud.deleteKit(req.body.kitId)
+    res.end();
+  } catch (error) {
+    res.send({
+      error: error
+    })
+  }
 });
 
 module.exports = router;

@@ -1,20 +1,34 @@
 var express = require('express');
+var compression = require('compression');
 var router = express.Router();
 var crud = require('../services/vehicleTableInteraction.js');
 
+router.use(compression())
 router.get('/loadNormal', async function(req, res, next) {
-  var all = await crud.loadVehicles();
-  all.forEach((vehicle) => {
-    vehicle.key = (vehicle.year + ':' + vehicle.make).replace(/\s/g, '')
-  });
-  res.send(all);
+  try{
+    var all = await crud.loadVehicles();
+    all.forEach((vehicle) => {
+      vehicle.key = (vehicle.year + ':' + vehicle.make).replace(/\s/g, '')
+    });
+    res.send(all);
+  }catch(error){
+    res.send({
+      error: error
+    })
+  }
 });
 router.get('/loadSpecial', async function(req, res, next) {
-  var special = await crud.loadSpecialVehicles();
-  special.forEach((vehicle) => {
-    vehicle.key = (vehicle.year + ':' + vehicle.make + ':' + vehicle.engine).replace(/\s/g, '')
-  });
-  res.send(special);
+  try{
+    var special = await crud.loadSpecialVehicles();
+    special.forEach((vehicle) => {
+      vehicle.key = (vehicle.year + ':' + vehicle.make + ':' + vehicle.engine).replace(/\s/g, '')
+    });
+    res.send(special);
+  }catch(error){
+    res.send({
+      error: error
+    })
+  }
 });
 
 /*main table crud routing */
@@ -37,23 +51,35 @@ router.post('/insert/normal', async function(req, res, next) {
   }
 });
 router.post('/update/normal', async function(req, res, next) {
-  var updateData = {
-    harnessNumberOne: req.body.harnessNumberOne,
-    harnessNumberTwo: req.body.harnessNumberTwo,
-    adapterNumber: req.body.adapterNumber,
-    yearId: req.body.year,
-    makeId: req.body.make
+  try{
+    var updateData = {
+      harnessNumberOne: req.body.harnessNumberOne,
+      harnessNumberTwo: req.body.harnessNumberTwo,
+      adapterNumber: req.body.adapterNumber,
+      yearId: req.body.year,
+      makeId: req.body.make
+    }
+    await crud.updateVehicle(updateData);
+    res.end();
+  }catch(error){
+    res.send({
+      error: error
+    })
   }
-  await crud.updateVehicle(updateData);
-  res.end();
 });
 router.post('/delete/normal', async function(req, res, next) {
-  var deleteData = {
-    yearId: req.body.year,
-    makeId: req.body.make
+  try{
+    var deleteData = {
+      yearId: req.body.year,
+      makeId: req.body.make
+    }
+    await crud.deleteVehicle(deleteData);
+    res.end();
+  }catch(error){
+    res.send({
+      error: error
+    })
   }
-  await crud.deleteVehicle(deleteData);
-  res.end();
 });
 
 /* special table crud routing */
@@ -77,24 +103,36 @@ router.post('/insert/special', async function(req, res, next) {
   }
 });
 router.post('/update/special', async function(req, res, next) {
-  var updateData = {
-    harnessNumberOne: req.body.harnessNumberOne,
-    harnessNumberTwo: req.body.harnessNumberTwo,
-    adapterNumber: req.body.adapterNumber,
-    yearId: req.body.year,
-    makeId: req.body.make,
-    engineId: req.body.engine
+  try{
+    var updateData = {
+      harnessNumberOne: req.body.harnessNumberOne,
+      harnessNumberTwo: req.body.harnessNumberTwo,
+      adapterNumber: req.body.adapterNumber,
+      yearId: req.body.year,
+      makeId: req.body.make,
+      engineId: req.body.engine
+    }
+    await crud.updateSpecialVehicle(updateData);
+    res.end();
+  }catch(error){
+    res.send({
+      error: error
+    })
   }
-  await crud.updateSpecialVehicle(updateData);
-  res.end();
 });
 router.post('/delete/special', async function(req, res, next) {
-  var deleteData = {
-    yearId: req.body.year,
-    makeId: req.body.make,
-    engineId: req.body.engine
+  try{
+    var deleteData = {
+      yearId: req.body.year,
+      makeId: req.body.make,
+      engineId: req.body.engine
+    }
+    await crud.deleteSpecialVehicle(deleteData);
+    res.end();
+  }catch(error){
+    res.send({
+      error: error
+    })
   }
-  await crud.deleteSpecialVehicle(deleteData);
-  res.end();
 });
 module.exports = router;
