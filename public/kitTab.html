@@ -4,7 +4,7 @@
     <form ng-submit="crud.insertKit()">
       <div ng-class="{'has-error' : !crud.insertedKitName}">
         <label>Kit Number</label>
-        <input class="form-control input-sm" type="text" ng-model="crud.insertedKitName" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedKitName">
+        <input class="form-control input-sm" type="number" ng-model="crud.insertedKitName" uib-tooltip="must enter something into this field" tooltip-placement="top" tooltip-trigger="'mouseenter'" tooltip-enable="!crud.insertedKitName">
       </div>
       <br>
       <div>

@@ -8,11 +8,11 @@
       </div>
       <div>
         <label>Main Harness</label>
-        <input type="text" ng-model="crud.mainHarness" class="form-control input-sm">
+        <input type="number" ng-model="crud.mainHarness" class="form-control input-sm">
       </div>
       <div>
         <label>Adapter Harness</label>
-        <input type="text" ng-model="crud.adapterHarness" class="form-control input-sm">
+        <input type="number" ng-model="crud.adapterHarness" class="form-control input-sm">
       </div>
 
       <div>
@@ -60,10 +60,10 @@
             <input type="text" ng-model='harness.harnessName' class="form-control input-sm" />
           </td>
           <td>
-            <input type="text" ng-model='harness.mainHarness' class="form-control input-sm" />
+            <input type="number" ng-model='harness.mainHarness' class="form-control input-sm" />
           </td>
           <td>
-            <input type="text" ng-model='harness.adapterHarness' class="form-control input-sm" />
+            <input type="number" ng-model='harness.adapterHarness' class="form-control input-sm" />
           </td>
           <td>
             <button type="button" class="btn btn-primary" ng-click="crud.updateHarness(harness)">Save</button>
