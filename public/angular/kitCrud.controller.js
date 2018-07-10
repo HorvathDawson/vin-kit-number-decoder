@@ -54,7 +54,7 @@ angular.module("myApp")
         kit.popup = null;
         vm.receiveKitNames();
       })
-    }
+    };
     function expand(kit) {
       if (vm.expanded == kit.id) {
         vm.expanded = null;
@@ -79,11 +79,11 @@ angular.module("myApp")
       item.popover = null;
       item.popup = null;
       item.edit = null;
-    }
+    };
     function edit(part) {
       part.edit = true;
       vm.updatedQuantity = part.quantity;
-    }
+    };
 
 
     /* insert kit form*/
@@ -91,12 +91,12 @@ angular.module("myApp")
       vm.hasEcm = false;
       vm.insertedKitName = null;
       vm.insertedParts = [];
-    }
+    };
     vm.receiveParts();
     function addInsertPart(part) {
       part.quantity = 1;
       vm.insertedParts.push(part);
-    }
+    };
     function removeInsertPart(index) {
       vm.insertedParts.splice(index, 1);
     };
@@ -132,7 +132,7 @@ angular.module("myApp")
         vm.addAlert(`Successfully Deleted Kit: ${kitId}`, 'danger')
         vm.receiveKitNames();
       })
-    }
+    };
 
     /*kit part modification*/
     /*deleting*/
@@ -145,12 +145,12 @@ angular.module("myApp")
       dataInteraction.deleteKitPart(data).then(() => {
         vm.receiveKitPart(kit);
       })
-    }
+    };
     /*inserting*/
     function selectedKitPartToAdd(part) {
       vm.selectedKitPart = part;
 
-    }
+    };
     function insertKitPart(kit) {
       if (vm.selectedKitPart) {
         let data = {
@@ -165,7 +165,7 @@ angular.module("myApp")
       } else {
         alert("missing field")
       }
-    }
+    };
     /* update kitPart */
     function updateQuantity(kit, part) {
       part.edit = null;
@@ -177,7 +177,7 @@ angular.module("myApp")
       dataInteraction.updateQuantity(data).then(() => {
         vm.receiveKitPart(kit);
       })
-    }
+    };
 
     /*get data */
     //for drop dropdown
@@ -201,7 +201,7 @@ angular.module("myApp")
       }, function errorCallback(error) {
         console.log('error getting data');
       });
-    }
+    };
     //recieve all parts for every kit
     function receiveKitParts() {
       dataInteraction.receiveKitPartsData().then(function successCallback(response) {
@@ -209,7 +209,7 @@ angular.module("myApp")
       }, function errorCallback(error) {
         console.log('error getting data');
       });
-    }
+    };
     //recieve parts for the kit you specify
     function receiveKitPart(kit) {
       dataInteraction.receiveKitPartData(kit.id).then(function successCallback(response) {
@@ -217,7 +217,7 @@ angular.module("myApp")
       }, function errorCallback(error) {
         console.log('error getting data');
       })
-    }
+    };
     //recieve the names of each kit
     function receiveKitNames() {
       dataInteraction.receiveKitNames().then(function successCallback(response) {
@@ -225,6 +225,6 @@ angular.module("myApp")
       }, function errorCallback(error) {
         console.log('error getting data');
       });
-    }
+    };
 
   });

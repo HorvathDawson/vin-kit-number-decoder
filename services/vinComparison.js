@@ -28,7 +28,6 @@ const comparison = {
       kitInfoDatabase.forEach((x) => kitInfoDatabaseIndex[x.id] = x.hasEcm);
 
       input.forEach((vehicle) => {
-        //console.log(kitInfoDatabaseIndex[vehicle.kitPartNumber]);
         kitPartsDatabase[vehicle.kitPartNumber].forEach((part) => {
           vehicle[part.partType] = part.number;
         })
@@ -82,7 +81,7 @@ const comparison = {
   }
 }
 /* sets values in objects for worksheets*/
-var test = function(data, vehicle, value, kitInfoDatabaseIndex) {
+var test = function(data, vehicle, entry, kitInfoDatabaseIndex) {
   try{
     let employee = {
       'VIN': vehicle.VIN,
@@ -92,10 +91,10 @@ var test = function(data, vehicle, value, kitInfoDatabaseIndex) {
       'Engine': vehicle.EngineManufacturer + ' ' + vehicle.EngineModel,
       'Kit Number': vehicle.kitPartNumber,
       'Has ECM': kitInfoDatabaseIndex[vehicle.kitPartNumber] ? 'Has ECM' : 'No ECM',
-      'Harness Name': value.harnessName,
-      'Harness Number': value.harnessNumberOne,
-      'Additional Harness Number': value.harnessNumberTwo,
-      'Adapter Number': value.adapterNumber
+      'Harness Name': entry.harnessName,
+      'Harness Number': entry.harnessNumberOne,
+      'Additional Harness Number': entry.harnessNumberTwo,
+      'Adapter Number': entry.adapterNumber
     }
     let customer = {
       'VIN': vehicle.VIN,
@@ -103,8 +102,8 @@ var test = function(data, vehicle, value, kitInfoDatabaseIndex) {
       'Make': vehicle.Make,
       'Model': vehicle.Model,
       'Kit Number': vehicle.kitPartNumber,
-      'Harness Number': kitInfoDatabaseIndex[vehicle.kitPartNumber] ? value.harnessNumberOne : 'No Ecm',
-      'Adapter Number': value.adapterNumber ? value.adapterNumber :'N/A',
+      'Harness Number': kitInfoDatabaseIndex[vehicle.kitPartNumber] ? entry.harnessNumberOne : 'No Ecm',
+      'Adapter Number': entry.adapterNumber ? entry.adapterNumber :'N/A',
       'Cradle Assembly': vehicle.Cradle ? vehicle.Cradle :'N/A',
       'Case': vehicle.Case ? vehicle.Case :'N/A',
       'Cable': vehicle.Cable ? vehicle.Cable :'N/A',
@@ -123,7 +122,7 @@ var test = function(data, vehicle, value, kitInfoDatabaseIndex) {
         'Error Code': vehicle.ErrorCode
       });
     } else {
-      if(!/[a-zA-Z]/.test(value.harnessNumberOne)){
+      if(!/[a-zA-Z]/.test(entry.harnessNumberOne)){
         data.employeeData.push(employee);
         data.customerData.push(customer);
       }else{
