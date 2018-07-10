@@ -22,24 +22,24 @@ angular.module("myApp")
       }, function errorCallback(error) {
         console.log('error getting data');
       });
-    };
+    }
 
     function clearForm() {
       vm.harnessName = null;
       vm.topLevel = null;
       vm.mainHarness = null;
       vm.adapterHarness = null;
-    };
+    }
 
     function edit(harness) {
       harness.edit = true;
-    };
+    }
 
     function reset(harness) {
       harness.popover = false;
       harness.edit = null;
       vm.receiveData();
-    };
+    }
 
     function insertHarness() {
       var insertData = {
@@ -53,7 +53,7 @@ angular.module("myApp")
       }, function(err) {
         console.log("error adding value");
       });
-    };
+    }
 
     function updateHarness(harness) {
       dataInteraction.updateHarness(harness).then(function() {
@@ -62,7 +62,7 @@ angular.module("myApp")
       }, function(err) {
         console.log("error updating value");
       });
-    };
+    }
 
     function deleteHarness(harness) {
       dataInteraction.deleteHarness(harness).then(function() {
@@ -70,5 +70,6 @@ angular.module("myApp")
       }, function(err) {
         console.log("error deleting value");
       });
-    };
+    }
+
   });
