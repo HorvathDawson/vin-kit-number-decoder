@@ -28,7 +28,6 @@ const comparison = {
       kitInfoDatabase.forEach((x) => kitInfoDatabaseIndex[x.id] = x.hasEcm);
 
       input.forEach((vehicle) => {
-        //console.log(kitInfoDatabaseIndex[vehicle.kitPartNumber]);
         kitPartsDatabase[vehicle.kitPartNumber].forEach((part) => {
           vehicle[part.partType] = part.number;
         })
