@@ -5,7 +5,7 @@ the format of the spread sheet is two columns the first containing the vin numbe
 
 ### Uploading to lightsail bitnami server
 
-##1.- Create directories
+## 1.- Create directories
 
 For that, you should run the following commands:
 ```
@@ -13,13 +13,13 @@ sudo mkdir -p /opt/bitnami/apps/myapp
 sudo mkdir /opt/bitnami/apps/myapp/conf
 sudo mkdir /opt/bitnami/apps/myapp/htdocs
 ```
-##2.- Create two files
+## 2.- Create two files
 
 For that, you can run the following commands:
 
 touch /opt/bitnami/apps/myapp/conf/httpd-prefix.conf
 touch /opt/bitnami/apps/myapp/conf/httpd-app.conf
-##3.- Add content to the first file
+## 3.- Add content to the first file
 
 You can edit the file using any text editor, for example nano
 ```
@@ -31,7 +31,7 @@ Include "/opt/bitnami/apps/myapp/conf/httpd-app.conf"
 ```
 Close the editor using Ctrl+X(you will be prompted to save your file if you have not)
 
-##4.- Add content to the second file
+## 4.- Add content to the second file
 
 You can edit the file using any text editor, for example nano
 ```
@@ -44,7 +44,7 @@ ProxyPassReverse / http://127.0.0.1:3000/
 ```
 Close the editor using Ctrl+X(you will be prompted to save your file if you have not)
 
-##5.- Edit Apache config file
+## 5.- Edit Apache config file
 
 Once you have created the files and directories above, add the following line to the end of the main Apache configuration file. Open the file (again using nano):
 ```
@@ -56,7 +56,7 @@ Include "/opt/bitnami/apps/myapp/conf/httpd-prefix.conf"
 ```
 Close the editor using Ctrl+X(you will be prompted to save your file if you have not)
 
-##5.5. - Middle step to download NPM package because server is linux
+## 5.5. - Middle step to download NPM package because server is linux
 the app was created on windows therefore one npm package "sqlite" was not cross compatible and therefore needs to be installed on the server.
 
 ```
@@ -64,14 +64,11 @@ npm install sqlite
 
 ```
 
-##6.- Restart apache
+## 6.- Restart apache
 
 For that execute
 ```
 sudo /opt/bitnami/ctlscript.sh restart apache
-```
-##7.- Start the Express server
 
 ```
-Give the example
-```
+## 7.- Start the Express server
