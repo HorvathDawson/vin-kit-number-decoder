@@ -3,12 +3,20 @@
 Decodes an excel (.xlsx) spreadsheet containing vin numbers and their corresponding Kit Numbers.
 the format of the spread sheet is two columns the first containing the vin numbers and the second containing the kit numbers desired to go with that vin.
 
-## Uploading to lightsail bitnami server
+## downloading onto lightsail bitnami server
+### download app onto server
+download the vin decoder app by git cloning it onto the server with the name 'myapp' unless you want to change all the following steps accordingly
 
+## installing onto lightsail bitnami server
 ### 1.- Create directories
 
 For that, you should run the following commands:
 ```
+cd stack
+sudo ./use_nodejs
+mkdir apps
+
+
 sudo mkdir -p /opt/bitnami/apps/myapp
 sudo mkdir /opt/bitnami/apps/myapp/conf
 sudo mkdir /opt/bitnami/apps/myapp/htdocs
@@ -60,6 +68,7 @@ Close the editor using Ctrl+X(you will be prompted to save your file if you have
 ### 5.5. - Middle step to download NPM package because server is linux
 the app was created on windows therefore one npm package "sqlite" was not cross compatible and therefore needs to be installed on the server.
 
+navigate to /opt/bitnami/apps/myapp and then run the following commands
 ```
 sudo npm install sqlite
 sudo npm install
