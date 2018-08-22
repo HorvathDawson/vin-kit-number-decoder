@@ -16,9 +16,10 @@ sudo mkdir /opt/bitnami/apps/myapp/htdocs
 ### 2.- Create two files
 
 For that, you can run the following commands:
-
+```
 touch /opt/bitnami/apps/myapp/conf/httpd-prefix.conf
 touch /opt/bitnami/apps/myapp/conf/httpd-app.conf
+```
 ### 3.- Add content to the first file
 
 You can edit the file using any text editor, for example nano
@@ -61,6 +62,7 @@ the app was created on windows therefore one npm package "sqlite" was not cross 
 
 ```
 sudo npm install sqlite
+sudo npm install
 ```
 
 ### 6.- Restart apache
