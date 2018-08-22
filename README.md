@@ -3,18 +3,6 @@
 Decodes an excel (.xlsx) spreadsheet containing vin numbers and their corresponding Kit Numbers.
 the format of the spread sheet is two columns the first containing the vin numbers and the second containing the kit numbers desired to go with that vin.
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
 ### Uploading to lightsail bitnami server
 
 ##1.- Create directories
