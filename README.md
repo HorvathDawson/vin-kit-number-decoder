@@ -87,7 +87,7 @@ sudo /opt/bitnami/ctlscript.sh restart apache
 forever -w ./bin/www
 ```
 
-##additional instructional resources
+## additional instructional resources
 
 
 https://medium.com/@sharmasha2nk/aws-lightsail-bitnami-nodejs-letsencrypt-cf653573b8a1
