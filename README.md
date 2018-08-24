@@ -4,20 +4,21 @@ Decodes an excel (.xlsx) spreadsheet containing vin numbers and their correspond
 the format of the spread sheet is two columns the first containing the vin numbers and the second containing the kit numbers desired to go with that vin.
 
 ## downloading onto lightsail bitnami server
-### download app onto server
-download the vin decoder app by git cloning it onto the server with the name 'myapp' unless you want to change all the following steps accordingly
+first create apps directory
+```
+cd stack
+sudo ./use_nodejs
+mkdir apps
+```
+Git clone or copy your Express project inside apps folder.
+make sure you name your gitclone 'myapp' or else you will have to change all the following steps to accommodate the name change...
 
 ## installing onto lightsail bitnami server
 ### 1.- Create directories
 
 For that, you should run the following commands:
+
 ```
-cd stack
-sudo ./use_nodejs
-mkdir apps
-
-
-sudo mkdir -p /opt/bitnami/apps/myapp
 sudo mkdir /opt/bitnami/apps/myapp/conf
 sudo mkdir /opt/bitnami/apps/myapp/htdocs
 ```
