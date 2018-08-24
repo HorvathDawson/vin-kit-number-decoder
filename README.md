@@ -86,3 +86,11 @@ sudo /opt/bitnami/ctlscript.sh restart apache
 ```
 forever -w ./bin/www
 ```
+
+##additional instructional resources
+
+
+https://medium.com/@sharmasha2nk/aws-lightsail-bitnami-nodejs-letsencrypt-cf653573b8a1
+
+
+https://stackoverflow.com/questions/49384925/how-to-create-opt-bitnami-apps-myapp-conf-httpd-prefix-conf-and-include-opt-bit
